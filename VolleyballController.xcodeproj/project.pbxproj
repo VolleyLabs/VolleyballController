@@ -1,0 +1,964 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C2582E242E09248E00D3B475 /* VolleyballController Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C2582E0E2E09248E00D3B475 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2582DF82E09248D00D3B475 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2582DFF2E09248D00D3B475;
+			remoteInfo = VolleyballController;
+		};
+		C2582E182E09248E00D3B475 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2582DF82E09248D00D3B475 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2582DFF2E09248D00D3B475;
+			remoteInfo = VolleyballController;
+		};
+		C2582E252E09248E00D3B475 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2582DF82E09248D00D3B475 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2582E222E09248E00D3B475;
+			remoteInfo = "VolleyballController Watch App";
+		};
+		C2582E332E09248F00D3B475 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2582DF82E09248D00D3B475 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2582E222E09248E00D3B475;
+			remoteInfo = "VolleyballController Watch App";
+		};
+		C2582E3D2E09248F00D3B475 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2582DF82E09248D00D3B475 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2582E222E09248E00D3B475;
+			remoteInfo = "VolleyballController Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C2582E492E09248F00D3B475 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				C2582E242E09248E00D3B475 /* VolleyballController Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C2582E002E09248D00D3B475 /* VolleyballController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolleyballController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2582E0D2E09248E00D3B475 /* VolleyballControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VolleyballControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2582E172E09248E00D3B475 /* VolleyballControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VolleyballControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VolleyballController Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2582E322E09248F00D3B475 /* VolleyballController Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "VolleyballController Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2582E3C2E09248F00D3B475 /* VolleyballController Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "VolleyballController Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C2582E022E09248D00D3B475 /* VolleyballController */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VolleyballController;
+			sourceTree = "<group>";
+		};
+		C2582E102E09248E00D3B475 /* VolleyballControllerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VolleyballControllerTests;
+			sourceTree = "<group>";
+		};
+		C2582E1A2E09248E00D3B475 /* VolleyballControllerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VolleyballControllerUITests;
+			sourceTree = "<group>";
+		};
+		C2582E272E09248E00D3B475 /* VolleyballController Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "VolleyballController Watch App";
+			sourceTree = "<group>";
+		};
+		C2582E352E09248F00D3B475 /* VolleyballController Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "VolleyballController Watch AppTests";
+			sourceTree = "<group>";
+		};
+		C2582E3F2E09248F00D3B475 /* VolleyballController Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "VolleyballController Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C2582DFD2E09248D00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E0A2E09248E00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E142E09248E00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E202E09248E00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E2F2E09248F00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E392E09248F00D3B475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C2582DF72E09248D00D3B475 = {
+			isa = PBXGroup;
+			children = (
+				C2582E022E09248D00D3B475 /* VolleyballController */,
+				C2582E102E09248E00D3B475 /* VolleyballControllerTests */,
+				C2582E1A2E09248E00D3B475 /* VolleyballControllerUITests */,
+				C2582E272E09248E00D3B475 /* VolleyballController Watch App */,
+				C2582E352E09248F00D3B475 /* VolleyballController Watch AppTests */,
+				C2582E3F2E09248F00D3B475 /* VolleyballController Watch AppUITests */,
+				C2582E012E09248D00D3B475 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C2582E012E09248D00D3B475 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2582E002E09248D00D3B475 /* VolleyballController.app */,
+				C2582E0D2E09248E00D3B475 /* VolleyballControllerTests.xctest */,
+				C2582E172E09248E00D3B475 /* VolleyballControllerUITests.xctest */,
+				C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */,
+				C2582E322E09248F00D3B475 /* VolleyballController Watch AppTests.xctest */,
+				C2582E3C2E09248F00D3B475 /* VolleyballController Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C2582DFF2E09248D00D3B475 /* VolleyballController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E4A2E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController" */;
+			buildPhases = (
+				C2582DFC2E09248D00D3B475 /* Sources */,
+				C2582DFD2E09248D00D3B475 /* Frameworks */,
+				C2582DFE2E09248D00D3B475 /* Resources */,
+				C2582E492E09248F00D3B475 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2582E262E09248E00D3B475 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E022E09248D00D3B475 /* VolleyballController */,
+			);
+			name = VolleyballController;
+			packageProductDependencies = (
+			);
+			productName = VolleyballController;
+			productReference = C2582E002E09248D00D3B475 /* VolleyballController.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C2582E0C2E09248E00D3B475 /* VolleyballControllerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E4D2E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballControllerTests" */;
+			buildPhases = (
+				C2582E092E09248E00D3B475 /* Sources */,
+				C2582E0A2E09248E00D3B475 /* Frameworks */,
+				C2582E0B2E09248E00D3B475 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2582E0F2E09248E00D3B475 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E102E09248E00D3B475 /* VolleyballControllerTests */,
+			);
+			name = VolleyballControllerTests;
+			packageProductDependencies = (
+			);
+			productName = VolleyballControllerTests;
+			productReference = C2582E0D2E09248E00D3B475 /* VolleyballControllerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C2582E162E09248E00D3B475 /* VolleyballControllerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E502E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballControllerUITests" */;
+			buildPhases = (
+				C2582E132E09248E00D3B475 /* Sources */,
+				C2582E142E09248E00D3B475 /* Frameworks */,
+				C2582E152E09248E00D3B475 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2582E192E09248E00D3B475 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E1A2E09248E00D3B475 /* VolleyballControllerUITests */,
+			);
+			name = VolleyballControllerUITests;
+			packageProductDependencies = (
+			);
+			productName = VolleyballControllerUITests;
+			productReference = C2582E172E09248E00D3B475 /* VolleyballControllerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C2582E222E09248E00D3B475 /* VolleyballController Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E462E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch App" */;
+			buildPhases = (
+				C2582E1F2E09248E00D3B475 /* Sources */,
+				C2582E202E09248E00D3B475 /* Frameworks */,
+				C2582E212E09248E00D3B475 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E272E09248E00D3B475 /* VolleyballController Watch App */,
+			);
+			name = "VolleyballController Watch App";
+			packageProductDependencies = (
+			);
+			productName = "VolleyballController Watch App";
+			productReference = C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C2582E312E09248F00D3B475 /* VolleyballController Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E532E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch AppTests" */;
+			buildPhases = (
+				C2582E2E2E09248F00D3B475 /* Sources */,
+				C2582E2F2E09248F00D3B475 /* Frameworks */,
+				C2582E302E09248F00D3B475 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2582E342E09248F00D3B475 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E352E09248F00D3B475 /* VolleyballController Watch AppTests */,
+			);
+			name = "VolleyballController Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "VolleyballController Watch AppTests";
+			productReference = C2582E322E09248F00D3B475 /* VolleyballController Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C2582E3B2E09248F00D3B475 /* VolleyballController Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2582E562E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch AppUITests" */;
+			buildPhases = (
+				C2582E382E09248F00D3B475 /* Sources */,
+				C2582E392E09248F00D3B475 /* Frameworks */,
+				C2582E3A2E09248F00D3B475 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2582E3E2E09248F00D3B475 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C2582E3F2E09248F00D3B475 /* VolleyballController Watch AppUITests */,
+			);
+			name = "VolleyballController Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "VolleyballController Watch AppUITests";
+			productReference = C2582E3C2E09248F00D3B475 /* VolleyballController Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C2582DF82E09248D00D3B475 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					C2582DFF2E09248D00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					C2582E0C2E09248E00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C2582DFF2E09248D00D3B475;
+					};
+					C2582E162E09248E00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C2582DFF2E09248D00D3B475;
+					};
+					C2582E222E09248E00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					C2582E312E09248F00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C2582E222E09248E00D3B475;
+					};
+					C2582E3B2E09248F00D3B475 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C2582E222E09248E00D3B475;
+					};
+				};
+			};
+			buildConfigurationList = C2582DFB2E09248D00D3B475 /* Build configuration list for PBXProject "VolleyballController" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C2582DF72E09248D00D3B475;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C2582E012E09248D00D3B475 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C2582DFF2E09248D00D3B475 /* VolleyballController */,
+				C2582E0C2E09248E00D3B475 /* VolleyballControllerTests */,
+				C2582E162E09248E00D3B475 /* VolleyballControllerUITests */,
+				C2582E222E09248E00D3B475 /* VolleyballController Watch App */,
+				C2582E312E09248F00D3B475 /* VolleyballController Watch AppTests */,
+				C2582E3B2E09248F00D3B475 /* VolleyballController Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C2582DFE2E09248D00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E0B2E09248E00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E152E09248E00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E212E09248E00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E302E09248F00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E3A2E09248F00D3B475 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C2582DFC2E09248D00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E092E09248E00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E132E09248E00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E1F2E09248E00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E2E2E09248F00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2582E382E09248F00D3B475 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C2582E0F2E09248E00D3B475 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2582DFF2E09248D00D3B475 /* VolleyballController */;
+			targetProxy = C2582E0E2E09248E00D3B475 /* PBXContainerItemProxy */;
+		};
+		C2582E192E09248E00D3B475 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2582DFF2E09248D00D3B475 /* VolleyballController */;
+			targetProxy = C2582E182E09248E00D3B475 /* PBXContainerItemProxy */;
+		};
+		C2582E262E09248E00D3B475 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2582E222E09248E00D3B475 /* VolleyballController Watch App */;
+			targetProxy = C2582E252E09248E00D3B475 /* PBXContainerItemProxy */;
+		};
+		C2582E342E09248F00D3B475 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2582E222E09248E00D3B475 /* VolleyballController Watch App */;
+			targetProxy = C2582E332E09248F00D3B475 /* PBXContainerItemProxy */;
+		};
+		C2582E3E2E09248F00D3B475 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2582E222E09248E00D3B475 /* VolleyballController Watch App */;
+			targetProxy = C2582E3D2E09248F00D3B475 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C2582E442E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C2582E452E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		C2582E472E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.personal.VolleyballController;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		C2582E482E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.personal.VolleyballController;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+		C2582E4B2E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C2582E4C2E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C2582E4E2E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyballController.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyballController";
+			};
+			name = Debug;
+		};
+		C2582E4F2E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyballController.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyballController";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C2582E512E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VolleyballController;
+			};
+			name = Debug;
+		};
+		C2582E522E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VolleyballController;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C2582E542E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyballController Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyballController Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		C2582E552E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyballController Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyballController Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+		C2582E572E09248F00D3B475 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "VolleyballController Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		C2582E582E09248F00D3B475 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PA34R6A28G;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "VolleyballController Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C2582DFB2E09248D00D3B475 /* Build configuration list for PBXProject "VolleyballController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E442E09248F00D3B475 /* Debug */,
+				C2582E452E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E462E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E472E09248F00D3B475 /* Debug */,
+				C2582E482E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E4A2E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E4B2E09248F00D3B475 /* Debug */,
+				C2582E4C2E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E4D2E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballControllerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E4E2E09248F00D3B475 /* Debug */,
+				C2582E4F2E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E502E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballControllerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E512E09248F00D3B475 /* Debug */,
+				C2582E522E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E532E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E542E09248F00D3B475 /* Debug */,
+				C2582E552E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2582E562E09248F00D3B475 /* Build configuration list for PBXNativeTarget "VolleyballController Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2582E572E09248F00D3B475 /* Debug */,
+				C2582E582E09248F00D3B475 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C2582DF82E09248D00D3B475 /* Project object */;
+}
