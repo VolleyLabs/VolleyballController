@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-latest
+    
+    strategy:
+      matrix:
+        destination:
+          - platform=iOS Simulator,OS=18.0,name=iPhone 15
+          - platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 9 (45mm)
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Select Xcode Version
+      run: sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer
+    
+    - name: Show Xcode Version
+      run: xcodebuild -version
+    
+    - name: Show Available Simulators
+      run: xcrun simctl list devices available
+    
+    - name: Build iOS App
+      if: contains(matrix.destination, 'iOS')
+      run: |
+        xcodebuild clean build \
+          -project VolleyballController.xcodeproj \
+          -scheme "VolleyballController" \
+          -destination "${{ matrix.destination }}" \
+          CODE_SIGNING_ALLOWED=NO
+    
+    - name: Test iOS App
+      if: contains(matrix.destination, 'iOS')
+      run: |
+        xcodebuild test \
+          -project VolleyballController.xcodeproj \
+          -scheme "VolleyballController" \
+          -destination "${{ matrix.destination }}" \
+          CODE_SIGNING_ALLOWED=NO
+    
+    - name: Build watchOS App
+      if: contains(matrix.destination, 'watchOS')
+      run: |
+        xcodebuild clean build \
+          -project VolleyballController.xcodeproj \
+          -scheme "VolleyballController Watch App" \
+          -destination "${{ matrix.destination }}" \
+          CODE_SIGNING_ALLOWED=NO
+    
+    - name: Test watchOS App
+      if: contains(matrix.destination, 'watchOS')
+      run: |
+        xcodebuild test \
+          -project VolleyballController.xcodeproj \
+          -scheme "VolleyballController Watch App" \
+          -destination "${{ matrix.destination }}" \
+          CODE_SIGNING_ALLOWED=NO
+
+  lint:
+    name: SwiftLint
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Install SwiftLint
+      run: brew install swiftlint
+    
+    - name: Run SwiftLint
+      run: swiftlint lint --reporter github-actions-logging
