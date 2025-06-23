@@ -7,9 +7,9 @@
 
 import XCTest
 
-final class VolleyballController_Watch_AppUITestsLaunchTests: XCTestCase {
+final class WatchAppUITestsLaunchTests: XCTestCase {
 
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
+    override static var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
 

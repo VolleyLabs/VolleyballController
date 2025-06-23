@@ -31,7 +31,7 @@ struct ContentView: View {
                         tapped: $rightTapped,
                         label: "RIGHT")
             }
-            
+
         // Finish button – smaller and pinned to bottom
         .safeAreaInset(edge: .bottom) {
             Button("Finish") {

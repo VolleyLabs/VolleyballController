@@ -8,7 +8,7 @@
 import Testing
 @testable import VolleyballController_Watch_App
 
-struct VolleyballController_Watch_AppTests {
+struct VolleyballControllerWatchAppTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
