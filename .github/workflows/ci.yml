@@ -15,7 +15,7 @@ jobs:
       matrix:
         destination:
           - platform=iOS Simulator,OS=18.5,name=iPhone 16
-          - platform=watchOS Simulator,OS=11.5,name=Apple Watch Series 9 (45mm)
+          - platform=watchOS Simulator,OS=11.5,name=Apple Watch Series 10 (46mm)
     
     steps:
     - name: Checkout
