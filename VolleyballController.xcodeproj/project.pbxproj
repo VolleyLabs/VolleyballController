@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C2582E242E09248E00D3B475 /* VolleyballController Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C27F8C162E093FA9002F5666 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C27F8C152E093FA9002F5666 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C27F8C162E093FA9002F5666 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +268,7 @@
 			);
 			name = "VolleyballController Watch App";
 			packageProductDependencies = (
+				C27F8C152E093FA9002F5666 /* Supabase */,
 			);
 			productName = "VolleyballController Watch App";
 			productReference = C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */;
@@ -360,6 +363,9 @@
 			);
 			mainGroup = C2582DF72E09248D00D3B475;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C27F8C142E093FA9002F5666 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C2582E012E09248D00D3B475 /* Products */;
 			projectDirPath = "";
@@ -632,6 +638,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
+				SUPABASE_URL = "$(SUPABASE_URL)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -661,6 +669,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
+				SUPABASE_URL = "$(SUPABASE_URL)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -824,6 +834,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
+				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
+				SUPABASE_URL = "$(SUPABASE_URL)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -844,6 +856,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
+				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
+				SUPABASE_URL = "$(SUPABASE_URL)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -959,6 +973,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C27F8C142E093FA9002F5666 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C27F8C152E093FA9002F5666 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27F8C142E093FA9002F5666 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C2582DF82E09248D00D3B475 /* Project object */;
 }

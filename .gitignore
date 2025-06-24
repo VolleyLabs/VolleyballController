@@ -145,3 +145,6 @@ swiftgen.yml
 
 # OS generated files
 Thumbs.db
+
+# Environment Configuration
+.env

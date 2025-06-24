@@ -10,6 +10,9 @@ struct ContentView: View {
     // Tap-flash state
     @State private var leftTapped  = false
     @State private var rightTapped = false
+    // Supabase connection test
+    @State private var connectionStatus: String = "Connecting..."
+    @State private var connectionColor: Color = .orange
 
     /// “Left”, “Right”, or “Tie”
     private var winner: String {
@@ -60,8 +63,17 @@ struct ContentView: View {
                     .padding(.trailing, 4)
                 }
                 .overlay(
-                    Text("\(leftWins) – \(rightWins)")
-                        .font(.caption2),
+                    VStack(spacing: 2) {
+                        Text("\(leftWins) – \(rightWins)")
+                            .font(.caption2)
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(connectionColor)
+                                .frame(width: 6, height: 6)
+                            Text(connectionStatus)
+                                .font(.system(size: 8))
+                        }
+                    },
                     alignment: .center
                 )
 
@@ -82,6 +94,36 @@ struct ContentView: View {
             .ignoresSafeArea()         // extend under safe‑area insets
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            testSupabaseConnection()
+        }
+    }
+    
+    private func testSupabaseConnection() {
+        Task {
+            do {
+                let _ = try await SupabaseService.shared.testConnection()
+                await MainActor.run {
+                    connectionStatus = "OK"
+                    connectionColor = .green
+                }
+            } catch {
+                await MainActor.run {
+                    // Show more specific error info
+                    let errorMsg = error.localizedDescription
+                    if errorMsg.contains("network") || errorMsg.contains("internet") {
+                        connectionStatus = "No Net"
+                    } else if errorMsg.contains("unauthorized") || errorMsg.contains("auth") {
+                        connectionStatus = "Auth"
+                    } else {
+                        connectionStatus = "Error"
+                    }
+                    connectionColor = .red
+                }
+                print("Supabase connection error: \(error)")
+                print("Error type: \(type(of: error))")
+            }
+        }
     }
 
     /// One half of the screen with flashing feedback
