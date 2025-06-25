@@ -1,18 +1,27 @@
 import SwiftUI
+import WatchKit          // haptic feedback
 
 struct ContentView: View {
     // Per-set score
     @State private var leftScore  = 0
     @State private var rightScore = 0
+    // Crown delta accumulators
+    @State private var crownLeft  = 0.0
+    @State private var crownRight = 0.0
     // Match totals (“global score”)
     @State private var leftWins   = 0
     @State private var rightWins  = 0
     // Tap-flash state
     @State private var leftTapped  = false
     @State private var rightTapped = false
+    // Suppress button tap after a long‑press (per side)
+    @State private var suppressLeftTap  = false
+    @State private var suppressRightTap = false
     // Supabase connection test
     @State private var connectionStatus: String = "Connecting..."
     @State private var connectionColor: Color = .orange
+    
+    @FocusState private var initialFocus: Bool
 
     /// “Left”, “Right”, or “Tie”
     private var winner: String {
@@ -27,12 +36,21 @@ struct ContentView: View {
                 tapZone(color: .blue,
                         score: $leftScore,
                         tapped: $leftTapped,
+                        crown: $crownLeft,
+                        suppress: $suppressLeftTap,
                         label: "LEFT")
+                .focused($initialFocus)
 
                 tapZone(color: .red,
                         score: $rightScore,
                         tapped: $rightTapped,
+                        crown: $crownRight,
+                        suppress: $suppressRightTap,
                         label: "RIGHT")
+            }
+            .onAppear {
+                // give the runloop a tick so layout is done
+                DispatchQueue.main.async { initialFocus = true }
             }
 
         // Finish button – smaller and pinned to bottom
@@ -48,6 +66,8 @@ struct ContentView: View {
             .font(.footnote)
             .buttonStyle(.borderless)
             .padding(.bottom, 2)
+            .focusable(false)        // keep tap gesture but remove from Digital Crown focus
+            .accessibilityHidden(true) // also hide from accessibility focus engine
         }
 
             // Top bar — reset top‑right and global score top‑center
@@ -60,6 +80,7 @@ struct ContentView: View {
                     }
                     .font(.caption2)
                     .buttonStyle(.borderless)
+                    .focusable(false)   // prevent Digital Crown from selecting this button
                     .padding(.trailing, 4)
                 }
                 .overlay(
@@ -130,46 +151,80 @@ struct ContentView: View {
     private func tapZone(color: Color,
                          score: Binding<Int>,
                          tapped: Binding<Bool>,
+                         crown: Binding<Double>,
+                         suppress: Binding<Bool>,
                          label: String) -> some View {
-        ZStack {
-            // Flash overlay
-            color.opacity(tapped.wrappedValue ? 0.2 : 0)
-                .animation(.easeOut(duration: 0.2), value: tapped.wrappedValue)
-
-            // Invisible hit area
-            Color.clear
-                .contentShape(Rectangle())
-                // Increase on single tap
-                .onTapGesture {
-                    score.wrappedValue += 1
-                    tapped.wrappedValue = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        tapped.wrappedValue = false
-                    }
-                }
-                // Decrease on long‑press (0.5 s)
-                .simultaneousGesture(
-                    LongPressGesture(minimumDuration: 0.5)
-                        .onEnded { _ in
-                            if score.wrappedValue > 0 {
-                                score.wrappedValue -= 1
-                                tapped.wrappedValue = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                    tapped.wrappedValue = false
-                                }
-                            }
-                        })
-                // Score labels
-                .overlay(
-                    VStack {
-                        Text(label).font(.caption)
-                        Text("\(score.wrappedValue)")
-                            .font(.system(size: 60, weight: .bold))
-                    }
-                    .foregroundColor(color)
-                )
+        // Helper ­– flash overlay for 0.2 s
+        func flash() {
+            tapped.wrappedValue = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                tapped.wrappedValue = false
+            }
         }
+        // Helper ­– adjust score and play feedback
+        func adjust(by delta: Int) {
+            let newValue = max(0, score.wrappedValue + delta)
+            guard newValue != score.wrappedValue else { return }
+            score.wrappedValue = newValue
+            (label == "LEFT" ? playLeftHaptic() : playRightHaptic())
+            flash()
+        }
+
+        return Button(action: {
+            if suppress.wrappedValue {
+                suppress.wrappedValue = false     // consume suppressed tap
+            } else {
+                adjust(by: +1)
+            }
+        }) {
+            ZStack {
+                // Flash overlay
+                color.opacity(tapped.wrappedValue ? 0.2 : 0)
+                    .animation(.easeOut(duration: 0.2), value: tapped.wrappedValue)
+
+                // Hit area (invisible)
+                Color.clear
+                    .contentShape(Rectangle())
+                    // Digital Crown ±1
+                    .focusable(true)
+                    .digitalCrownRotation(crown,
+                                          from: -10, through: 10, by: 1,
+                                          sensitivity: .medium,
+                                          isContinuous: false)
+                    .onChange(of: crown.wrappedValue) { _, newVal in
+                        if newVal > 0 { adjust(by: +1) }
+                        else if newVal < 0 { adjust(by: -1) }
+                        crown.wrappedValue = 0      // reset
+                    }
+                    // Score labels
+                    .overlay(
+                        VStack {
+                            Text(label).font(.caption)
+                            Text("\(score.wrappedValue)")
+                                .font(.system(size: 60, weight: .bold))
+                        }
+                        .foregroundColor(color)
+                    )
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)   // makes AssistiveTouch focusable
+        .buttonStyle(.plain)        // invisible
+        .accessibilityLabel(Text(label == "LEFT" ? "Left score area" : "Right score area"))
+        .accessibilityRespondsToUserInteraction(true)
+        .accessibilityAddTraits(.isButton)
+        // Long‑press (–1)
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 0.5)
+                .onEnded { _ in
+                    adjust(by: -1)
+                    suppress.wrappedValue = true   // prevent following tap
+                },
+            including: .all)
     }
+
+    // MARK: – Haptic helpers
+    private func playLeftHaptic()  { WKInterfaceDevice.current().play(.directionUp) }  // audible up‑tone
+    private func playRightHaptic() { WKInterfaceDevice.current().play(.success) }      // audible chime
 }
 
 #Preview { ContentView() }
