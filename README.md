@@ -2,6 +2,9 @@
 
 A SwiftUI volleyball scoring app for iOS and Apple Watch.
 
+![image](https://github.com/user-attachments/assets/316dd1fe-60f7-4934-a66e-ec01bf33a8c3)
+
+
 ## Features
 
 ### Apple Watch App
