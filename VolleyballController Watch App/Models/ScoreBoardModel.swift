@@ -13,6 +13,7 @@ class ScoreBoardModel {
     var suppressRightTap = false
     var connectionStatus: String = "Connecting..."
     var connectionColor: Color = .orange
+    var isLoading: Bool = true
     
     private var today: String {
         ISO8601DateFormatter().string(from: Date()).prefix(10).description
@@ -70,23 +71,23 @@ class ScoreBoardModel {
             
             let (setScore, globalScore) = try await (setScoreTask, globalScoreTask)
             
-            await MainActor.run {
-                // Update set scores if available
-                if let setScore = setScore {
-                    leftScore = setScore.left_score
-                    rightScore = setScore.right_score
-                }
-                
-                // Update global wins if available
-                if let globalScore = globalScore {
-                    leftWins = globalScore.left_wins
-                    rightWins = globalScore.right_wins
-                }
+            // Update set scores if available
+            if let setScore = setScore {
+                leftScore = setScore.left_score
+                rightScore = setScore.right_score
             }
             
+            // Update global wins if available
+            if let globalScore = globalScore {
+                leftWins = globalScore.left_wins
+                rightWins = globalScore.right_wins
+            }
+            
+            isLoading = false
             return true
         } catch {
             print("Failed to load initial state: \(error)")
+            isLoading = false
             return false
         }
     }

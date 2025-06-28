@@ -30,6 +30,7 @@ struct ContentView: View {
                     score: $scoreBoard.leftScore,
                     tapped: $scoreBoard.leftTapped,
                     suppress: $scoreBoard.suppressLeftTap,
+                    isLoading: scoreBoard.isLoading,
                     onScoreChange: syncSetScore
                 )
                 .focused($initialFocus)
@@ -41,11 +42,12 @@ struct ContentView: View {
                     score: $scoreBoard.rightScore,
                     tapped: $scoreBoard.rightTapped,
                     suppress: $scoreBoard.suppressRightTap,
+                    isLoading: scoreBoard.isLoading,
                     onScoreChange: syncSetScore
                 )
             }
             .onAppear {
-                DispatchQueue.main.async { initialFocus = true }
+                initialFocus = true
             }
 
             .safeAreaInset(edge: .bottom) {
@@ -67,6 +69,7 @@ struct ContentView: View {
                     rightWins: scoreBoard.rightWins,
                     connectionStatus: scoreBoard.connectionStatus,
                     connectionColor: scoreBoard.connectionColor,
+                    isLoading: scoreBoard.isLoading,
                     onReset: {
                         scoreBoard.resetAll()
                         syncGlobalScore()
@@ -95,25 +98,16 @@ struct ContentView: View {
     }
     
     private func initializeApp() {
-        Task {
-            // Show connecting state briefly so user can see it
-            await MainActor.run {
-                scoreBoard.updateConnectionStatus("Connecting...", color: .orange)
-            }
-            
-            // Load initial state (this also tests connection)
+        // Load data in background without blocking UI
+        Task(priority: .userInitiated) {
             let success = await scoreBoard.loadInitialState()
             
-            await MainActor.run {
-                if success {
-                    // Connection successful
-                    scoreBoard.updateConnectionStatus("OK", color: .green)
-                } else {
-                    // Connection failed - show appropriate error status
-                    scoreBoard.updateConnectionStatus("Error", color: .red)
-                }
+            // Handle UI updates on main thread
+            if success {
+                scoreBoard.updateConnectionStatus("OK", color: .green)
+            } else {
+                scoreBoard.updateConnectionStatus("Error", color: .red)
             }
-            
         }
     }
 }

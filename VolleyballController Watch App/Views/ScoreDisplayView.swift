@@ -5,6 +5,7 @@ struct ScoreDisplayView: View {
     let rightWins: Int
     let connectionStatus: String
     let connectionColor: Color
+    let isLoading: Bool
     let onReset: () -> Void
     
     var body: some View {
@@ -20,8 +21,15 @@ struct ScoreDisplayView: View {
         }
         .overlay(
             VStack(spacing: 2) {
-                Text("\(leftWins) – \(rightWins)")
-                    .font(.caption2)
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .secondary))
+                        .scaleEffect(0.6)
+                        .frame(height: 12)
+                } else {
+                    Text("\(leftWins) – \(rightWins)")
+                        .font(.caption2)
+                }
                 HStack(spacing: 4) {
                     Circle()
                         .fill(connectionColor)

@@ -7,6 +7,7 @@ struct TapZoneView: View {
     @Binding var score: Int
     @Binding var tapped: Bool
     @Binding var suppress: Bool
+    let isLoading: Bool
     
     let onScoreChange: () -> Void
     
@@ -21,8 +22,16 @@ struct TapZoneView: View {
             VStack {
                 Text(label)
                     .font(.caption)
-                Text("\(score)")
-                    .font(.system(size: 60, weight: .bold))
+                
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: color))
+                        .scaleEffect(1.5)
+                        .frame(width: 80, height: 60)
+                } else {
+                    Text("\(score)")
+                        .font(.system(size: 60, weight: .bold))
+                }
             }
             .foregroundColor(color)
         }
