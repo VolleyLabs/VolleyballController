@@ -1,5 +1,6 @@
 import SwiftUI
 import WatchKit          // haptic feedback
+import Supabase          // Supabase Swift SDK
 
 struct ContentView: View {
     // Per-set score
@@ -17,10 +18,77 @@ struct ContentView: View {
     // Suppress button tap after a long‑press (per side)
     @State private var suppressLeftTap  = false
     @State private var suppressRightTap = false
-    // Supabase connection test
+    // Supabase connection test status
     @State private var connectionStatus: String = "Connecting..."
     @State private var connectionColor: Color = .orange
-    
+
+    // MARK: – Supabase
+    /// Shared Supabase client
+    private var supabase: SupabaseClient { SupabaseService.shared.client }
+
+    /// YYYY‑MM‑DD string for today (row key)
+    private var today: String { ISO8601DateFormatter().string(from: Date()).prefix(10).description }
+
+    // Payloads must conform to Encodable for Supabase
+    private struct SetScore: Encodable {
+        let day: String
+        let left_score: Int
+        let right_score: Int
+    }
+    private struct GlobalScore: Encodable {
+        let day: String
+        let left_wins: Int
+        let right_wins: Int
+    }
+
+    /// Optimistic upsert of the current per‑set score
+    private func syncSetScore() {
+        Task {
+            let payload = SetScore(day: today,
+                                   left_score: leftScore,
+                                   right_score: rightScore)
+            do {
+                try await supabase
+                    .from("daily_sets")
+                    .upsert(payload,
+                            onConflict: "day",
+                            returning: .minimal)
+                    .execute()
+                #if DEBUG
+                print("[Supabase] ✅ daily_sets upsert OK")
+                #endif
+            } catch {
+                #if DEBUG
+                print("[Supabase] ❌ daily_sets upsert FAILED:", error)
+                #endif
+            }
+        }
+    }
+
+    /// Optimistic upsert of the daily totals (“global score”)
+    private func syncGlobalScore() {
+        Task {
+            let payload = GlobalScore(day: today,
+                                      left_wins: leftWins,
+                                      right_wins: rightWins)
+            do {
+                try await supabase
+                    .from("daily_totals")
+                    .upsert(payload,
+                            onConflict: "day",
+                            returning: .minimal)
+                    .execute()
+                #if DEBUG
+                print("[Supabase] ✅ daily_totals upsert OK")
+                #endif
+            } catch {
+                #if DEBUG
+                print("[Supabase] ❌ daily_totals upsert FAILED:", error)
+                #endif
+            }
+        }
+    }
+
     @FocusState private var initialFocus: Bool
 
     /// “Left”, “Right”, or “Tie”
@@ -51,6 +119,8 @@ struct ContentView: View {
             .onAppear {
                 // give the runloop a tick so layout is done
                 DispatchQueue.main.async { initialFocus = true }
+                syncSetScore()
+                syncGlobalScore()
             }
 
         // Finish button – smaller and pinned to bottom
@@ -61,6 +131,8 @@ struct ContentView: View {
                     if leftScore > rightScore { leftWins += 1 } else { rightWins += 1 }
                     leftScore = 0
                     rightScore = 0
+                    syncSetScore()      // clear per‑set score row
+                    syncGlobalScore()   // push daily totals
                 }
             }
             .font(.footnote)
@@ -75,8 +147,13 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     Button("Reset") {
-                        leftWins = 0
-                        rightWins = 0
+                        // Clear everything
+                        leftWins   = 0
+                        rightWins  = 0
+                        leftScore  = 0
+                        rightScore = 0
+                        syncGlobalScore()   // push reset totals
+                        syncSetScore()      // push cleared per‑set
                     }
                     .font(.caption2)
                     .buttonStyle(.borderless)
@@ -166,6 +243,7 @@ struct ContentView: View {
             let newValue = max(0, score.wrappedValue + delta)
             guard newValue != score.wrappedValue else { return }
             score.wrappedValue = newValue
+            syncSetScore()     // push change to Supabase
             (label == "LEFT" ? playLeftHaptic() : playRightHaptic())
             flash()
         }
