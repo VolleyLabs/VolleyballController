@@ -41,6 +41,11 @@ xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballContr
   - `daily_sets` table: Current set scores
   - `daily_totals` table: Match win totals
   - Connection status indicator with visual feedback
+- **Background Persistence**: HealthKit workout session prevents app from sleeping during gameplay
+  - Uses `WorkoutKeepAlive` service with generic workout type
+  - Automatically starts when app initializes data
+  - Keeps app active even when display turns off during extended volleyball sessions
+  - Requires HealthKit permissions (NSHealthShareUsageDescription, NSHealthUpdateUsageDescription)
 - **Accessibility**: Full VoiceOver support and AssistiveTouch compatibility
 - **Configuration**: Supabase credentials via `project.local.xcconfig`
 - **Deployment Targets**: iOS 18.5+, watchOS 11.5+
@@ -55,7 +60,8 @@ VolleyballController Watch App/
 │   └── ScoreModels.swift         # Data structures for Supabase payloads
 ├── Services/
 │   ├── HapticService.swift      # Haptic feedback management
-│   └── SupabaseService.swift    # Cloud sync service
+│   ├── SupabaseService.swift    # Cloud sync service
+│   └── WorkoutKeepAlive.swift   # Background persistence using HealthKit
 ├── Views/
 │   ├── ContentView.swift        # Main UI composition
 │   ├── ScoreDisplayView.swift   # Score display and reset UI
@@ -68,3 +74,12 @@ VolleyballController Watch App/
 - **Supabase Swift SDK**: Real-time database synchronization
 - **SwiftUI**: Native UI framework
 - **WatchKit**: Haptic feedback and device interaction
+- **HealthKit**: Background app persistence during extended gameplay sessions
+
+## Required Capabilities & Permissions
+
+- **HealthKit**: Required for workout session background persistence
+  - `NSHealthShareUsageDescription`: "Needed to start a workout session."
+  - `NSHealthUpdateUsageDescription`: "Needed to record a dummy workout."
+- **Network**: Required for Supabase cloud synchronization
+- **Background App Refresh**: Enabled through HealthKit workout sessions

@@ -20,6 +20,10 @@ A watchOS-first SwiftUI volleyball scoring app with real-time cloud synchronizat
   - Automatic score syncing across devices
   - Connection status indicator
   - Optimistic updates with error handling
+- **Background persistence**: Stays active during extended gameplay
+  - Uses HealthKit workout session to prevent app sleeping
+  - Perfect for 2+ hour volleyball sessions
+  - Automatically activates when app starts
 - **Accessibility**: Full VoiceOver and AssistiveTouch support
 
 ### iOS App
@@ -31,6 +35,7 @@ A watchOS-first SwiftUI volleyball scoring app with real-time cloud synchronizat
 - iOS 18.5+ (companion)
 - Xcode 16.4+
 - Supabase account (for cloud sync)
+- **HealthKit permissions** (for background persistence during gameplay)
 
 ## Getting Started
 
@@ -38,6 +43,7 @@ A watchOS-first SwiftUI volleyball scoring app with real-time cloud synchronizat
 1. Open `VolleyballController.xcodeproj` in Xcode
 2. Select Apple Watch target/simulator 
 3. Build and run the app
+4. Grant HealthKit permissions when prompted (required for background persistence)
 
 ### Cloud Sync Setup (Optional)
 1. Create a Supabase project at [supabase.com](https://supabase.com)
@@ -75,8 +81,11 @@ A watchOS-first SwiftUI volleyball scoring app with real-time cloud synchronizat
 
 The app uses a clean SwiftUI architecture with:
 - **ContentView.swift**: Main scoring interface with gesture handling
+- **ScoreBoardModel.swift**: Observable state management with workout session integration
 - **SupabaseService.swift**: Cloud synchronization service
+- **WorkoutKeepAlive.swift**: HealthKit-based background persistence service
 - **State management**: Local state with optimistic cloud updates
+- **Background persistence**: HealthKit workout sessions prevent app sleeping
 - **Error handling**: Graceful degradation when offline
 
 ## Development
@@ -101,3 +110,10 @@ xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballContr
 - [Supabase Swift SDK](https://github.com/supabase/supabase-swift): Real-time database
 - SwiftUI: Native UI framework  
 - WatchKit: Haptic feedback and device interaction
+- HealthKit: Background app persistence during extended gameplay sessions
+
+## Permissions & Privacy
+
+The app requires the following permissions:
+- **HealthKit Access**: Used to start a dummy workout session that keeps the app active during extended volleyball games (2+ hours). No health data is collected or stored - this is purely for background app persistence.
+- **Network Access**: Required for real-time score synchronization with Supabase (optional feature)

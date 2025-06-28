@@ -15,6 +15,8 @@ class ScoreBoardModel {
     var connectionColor: Color = .orange
     var isLoading: Bool = true
     
+    private let workoutKeepAlive = WorkoutKeepAlive()
+    
     private var today: String {
         ISO8601DateFormatter().string(from: Date()).prefix(10).description
     }
@@ -65,6 +67,9 @@ class ScoreBoardModel {
     
     func loadInitialState() async -> Bool {
         do {
+            // Start workout keep alive to prevent app from sleeping
+            workoutKeepAlive.start()
+            
             // Run both SQL requests in parallel
             async let setScoreTask = SupabaseService.shared.fetchTodaysSetScore()
             async let globalScoreTask = SupabaseService.shared.fetchTodaysGlobalScore()
@@ -90,5 +95,13 @@ class ScoreBoardModel {
             isLoading = false
             return false
         }
+    }
+    
+    func stopWorkout() {
+        workoutKeepAlive.stop()
+    }
+    
+    deinit {
+        workoutKeepAlive.stop()
     }
 }
