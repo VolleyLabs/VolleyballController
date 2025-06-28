@@ -6,7 +6,6 @@ struct TapZoneView: View {
     let isLeft: Bool
     @Binding var score: Int
     @Binding var tapped: Bool
-    @Binding var crown: Double
     @Binding var suppress: Bool
     
     let onScoreChange: () -> Void
@@ -19,34 +18,16 @@ struct TapZoneView: View {
                 adjustScore(by: 1)
             }
         }) {
-            ZStack {
-                Color.clear
-                    .contentShape(Rectangle())
-                    .focusable(true)
-                    .digitalCrownRotation($crown,
-                                          from: -10, through: 10, by: 1,
-                                          sensitivity: .medium,
-                                          isContinuous: false)
-                    .onChange(of: crown) { _, newVal in
-                        if newVal > 0 {
-                            adjustScore(by: 1)
-                        } else if newVal < 0 {
-                            adjustScore(by: -1)
-                        }
-                        crown = 0
-                    }
-                    .overlay(
-                        VStack {
-                            Text(label)
-                                .font(.caption)
-                            Text("\(score)")
-                                .font(.system(size: 60, weight: .bold))
-                        }
-                        .foregroundColor(color)
-                    )
+            VStack {
+                Text(label)
+                    .font(.caption)
+                Text("\(score)")
+                    .font(.system(size: 60, weight: .bold))
             }
+            .foregroundColor(color)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
         .buttonStyle(.plain)
         .accessibilityLabel(Text(isLeft ? "Left score area" : "Right score area"))
         .accessibilityRespondsToUserInteraction(true)

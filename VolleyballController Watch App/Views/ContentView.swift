@@ -58,7 +58,6 @@ struct ContentView: View {
                     isLeft: true,
                     score: $scoreBoard.leftScore,
                     tapped: $scoreBoard.leftTapped,
-                    crown: $scoreBoard.crownLeft,
                     suppress: $scoreBoard.suppressLeftTap,
                     onScoreChange: syncSetScore
                 )
@@ -70,7 +69,6 @@ struct ContentView: View {
                     isLeft: false,
                     score: $scoreBoard.rightScore,
                     tapped: $scoreBoard.rightTapped,
-                    crown: $scoreBoard.crownRight,
                     suppress: $scoreBoard.suppressRightTap,
                     onScoreChange: syncSetScore
                 )

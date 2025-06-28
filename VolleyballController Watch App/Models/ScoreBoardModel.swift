@@ -7,8 +7,6 @@ class ScoreBoardModel {
     var rightScore = 0
     var leftWins = 0
     var rightWins = 0
-    var crownLeft = 0.0
-    var crownRight = 0.0
     var leftTapped = false
     var rightTapped = false
     var suppressLeftTap = false
