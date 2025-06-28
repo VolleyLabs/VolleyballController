@@ -61,4 +61,33 @@ class ScoreBoardModel {
         connectionStatus = status
         connectionColor = color
     }
+    
+    func loadInitialState() async -> Bool {
+        do {
+            // Run both SQL requests in parallel
+            async let setScoreTask = SupabaseService.shared.fetchTodaysSetScore()
+            async let globalScoreTask = SupabaseService.shared.fetchTodaysGlobalScore()
+            
+            let (setScore, globalScore) = try await (setScoreTask, globalScoreTask)
+            
+            await MainActor.run {
+                // Update set scores if available
+                if let setScore = setScore {
+                    leftScore = setScore.left_score
+                    rightScore = setScore.right_score
+                }
+                
+                // Update global wins if available
+                if let globalScore = globalScore {
+                    leftWins = globalScore.left_wins
+                    rightWins = globalScore.right_wins
+                }
+            }
+            
+            return true
+        } catch {
+            print("Failed to load initial state: \(error)")
+            return false
+        }
+    }
 }

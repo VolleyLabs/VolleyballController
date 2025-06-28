@@ -1,12 +1,12 @@
 import Foundation
 
-struct SetScore: Encodable {
+struct SetScore: Codable {
     let day: String
     let left_score: Int
     let right_score: Int
 }
 
-struct GlobalScore: Encodable {
+struct GlobalScore: Codable {
     let day: String
     let left_wins: Int
     let right_wins: Int

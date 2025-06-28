@@ -5,47 +5,18 @@ struct ContentView: View {
     @State private var scoreBoard = ScoreBoardModel()
     @FocusState private var initialFocus: Bool
     
-    private var supabase: SupabaseClient { SupabaseService.shared.client }
     
     private func syncSetScore() {
         Task {
             let payload = scoreBoard.createSetScore()
-            do {
-                try await supabase
-                    .from("daily_sets")
-                    .upsert(payload,
-                            onConflict: "day",
-                            returning: .minimal)
-                    .execute()
-                #if DEBUG
-                print("[Supabase] ✅ daily_sets upsert OK")
-                #endif
-            } catch {
-                #if DEBUG
-                print("[Supabase] ❌ daily_sets upsert FAILED:", error)
-                #endif
-            }
+            try? await SupabaseService.shared.syncSetScore(payload)
         }
     }
     
     private func syncGlobalScore() {
         Task {
             let payload = scoreBoard.createGlobalScore()
-            do {
-                try await supabase
-                    .from("daily_totals")
-                    .upsert(payload,
-                            onConflict: "day",
-                            returning: .minimal)
-                    .execute()
-                #if DEBUG
-                print("[Supabase] ✅ daily_totals upsert OK")
-                #endif
-            } catch {
-                #if DEBUG
-                print("[Supabase] ❌ daily_totals upsert FAILED:", error)
-                #endif
-            }
+            try? await SupabaseService.shared.syncGlobalScore(payload)
         }
     }
 
@@ -75,8 +46,6 @@ struct ContentView: View {
             }
             .onAppear {
                 DispatchQueue.main.async { initialFocus = true }
-                syncSetScore()
-                syncGlobalScore()
             }
 
             .safeAreaInset(edge: .bottom) {
@@ -121,32 +90,30 @@ struct ContentView: View {
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            testSupabaseConnection()
+            initializeApp()
         }
     }
     
-    private func testSupabaseConnection() {
+    private func initializeApp() {
         Task {
-            do {
-                let _ = try await SupabaseService.shared.testConnection()
-                await MainActor.run {
-                    scoreBoard.updateConnectionStatus("OK", color: .green)
-                }
-            } catch {
-                await MainActor.run {
-                    let errorMsg = error.localizedDescription
-                    let status = if errorMsg.contains("network") || errorMsg.contains("internet") {
-                        "No Net"
-                    } else if errorMsg.contains("unauthorized") || errorMsg.contains("auth") {
-                        "Auth"
-                    } else {
-                        "Error"
-                    }
-                    scoreBoard.updateConnectionStatus(status, color: .red)
-                }
-                print("Supabase connection error: \(error)")
-                print("Error type: \(type(of: error))")
+            // Show connecting state briefly so user can see it
+            await MainActor.run {
+                scoreBoard.updateConnectionStatus("Connecting...", color: .orange)
             }
+            
+            // Load initial state (this also tests connection)
+            let success = await scoreBoard.loadInitialState()
+            
+            await MainActor.run {
+                if success {
+                    // Connection successful
+                    scoreBoard.updateConnectionStatus("OK", color: .green)
+                } else {
+                    // Connection failed - show appropriate error status
+                    scoreBoard.updateConnectionStatus("Error", color: .red)
+                }
+            }
+            
         }
     }
 }

@@ -23,19 +23,92 @@ class SupabaseService: ObservableObject {
         )
     }
     
-    func testConnection() async throws -> Bool {
+    func fetchTodaysSetScore() async throws -> SetScore? {
+        let today = ISO8601DateFormatter().string(from: Date()).prefix(10).description
+        
         do {
-            // Test connection by querying existing daily_totals table with minimal data
-            let _ = try await client
-                .from("daily_totals")
-                .select("day")
+            let scores: [SetScore] = try await client
+                .from("daily_sets")
+                .select("*")
+                .eq("day", value: today)
                 .limit(1)
                 .execute()
+                .value
             
-            return true
+            #if DEBUG
+            print("[Supabase] ✅ daily_sets fetch OK - found \(scores.count) records")
+            #endif
+            
+            return scores.first
         } catch {
-            // Log the specific error for debugging
-            print("Supabase connection test error: \(error)")
+            #if DEBUG
+            print("[Supabase] ❌ daily_sets fetch FAILED:", error)
+            #endif
+            throw error
+        }
+    }
+    
+    func fetchTodaysGlobalScore() async throws -> GlobalScore? {
+        let today = ISO8601DateFormatter().string(from: Date()).prefix(10).description
+        
+        do {
+            let scores: [GlobalScore] = try await client
+                .from("daily_totals")
+                .select("*")
+                .eq("day", value: today)
+                .limit(1)
+                .execute()
+                .value
+            
+            #if DEBUG
+            print("[Supabase] ✅ daily_totals fetch OK - found \(scores.count) records")
+            #endif
+            
+            return scores.first
+        } catch {
+            #if DEBUG
+            print("[Supabase] ❌ daily_totals fetch FAILED:", error)
+            #endif
+            throw error
+        }
+    }
+    
+    func syncSetScore(_ setScore: SetScore) async throws {
+        do {
+            try await client
+                .from("daily_sets")
+                .upsert(setScore,
+                        onConflict: "day",
+                        returning: .minimal)
+                .execute()
+            
+            #if DEBUG
+            print("[Supabase] ✅ daily_sets upsert OK")
+            #endif
+        } catch {
+            #if DEBUG
+            print("[Supabase] ❌ daily_sets upsert FAILED:", error)
+            #endif
+            throw error
+        }
+    }
+    
+    func syncGlobalScore(_ globalScore: GlobalScore) async throws {
+        do {
+            try await client
+                .from("daily_totals")
+                .upsert(globalScore,
+                        onConflict: "day", 
+                        returning: .minimal)
+                .execute()
+            
+            #if DEBUG
+            print("[Supabase] ✅ daily_totals upsert OK")
+            #endif
+        } catch {
+            #if DEBUG
+            print("[Supabase] ❌ daily_totals upsert FAILED:", error)
+            #endif
             throw error
         }
     }
