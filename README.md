@@ -1,50 +1,103 @@
 # VolleyballController
 
-A SwiftUI volleyball scoring app for iOS and Apple Watch.
+A watchOS-first SwiftUI volleyball scoring app with real-time cloud synchronization.
 
 ![image](https://github.com/user-attachments/assets/316dd1fe-60f7-4934-a66e-ec01bf33a8c3)
 
-
 ## Features
 
-### Apple Watch App
+### Apple Watch App (Primary)
 - **Split-screen scoring**: Tap left or right zones to score for each team
-- **Visual feedback**: Color-coded flash animations on scoring
-- **Gesture controls**: Tap to increment score, long-press to decrement
-- **Match tracking**: Track wins across multiple sets
-- **Set management**: Finish sets and reset global scores
+- **Advanced gesture controls**: 
+  - Tap to increment score (+1)
+  - Long-press to decrement score (-1)
+  - Digital Crown support for precise adjustments
+- **Visual & haptic feedback**: 
+  - Color-coded flash animations (blue/red)
+  - Distinct haptic patterns for each team
+- **Match tracking**: Track wins across multiple sets with persistent storage
+- **Cloud synchronization**: Real-time Supabase integration
+  - Automatic score syncing across devices
+  - Connection status indicator
+  - Optimistic updates with error handling
+- **Accessibility**: Full VoiceOver and AssistiveTouch support
 
 ### iOS App
-- Companion app (minimal implementation)
+- Companion app (placeholder - not actively developed)
 
 ## Requirements
 
-- iOS 18.5+
-- watchOS 11.5+
+- **watchOS 11.5+** (primary platform)
+- iOS 18.5+ (companion)
 - Xcode 16.4+
+- Supabase account (for cloud sync)
 
 ## Getting Started
 
+### Basic Setup
 1. Open `VolleyballController.xcodeproj` in Xcode
-2. Select your target device/simulator
+2. Select Apple Watch target/simulator 
 3. Build and run the app
 
-The Apple Watch app is the primary interface - use the left and right tap zones to score points for each team.
+### Cloud Sync Setup (Optional)
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Copy `project.local.xcconfig` and update with your credentials:
+   ```
+   SUPABASE_URL = your_supabase_url
+   SUPABASE_ANON_KEY = your_anon_key
+   ```
+3. Create these tables in your Supabase database:
+   ```sql
+   -- Daily set scores
+   CREATE TABLE daily_sets (
+     day DATE PRIMARY KEY,
+     left_score INTEGER DEFAULT 0,
+     right_score INTEGER DEFAULT 0
+   );
+   
+   -- Daily match totals
+   CREATE TABLE daily_totals (
+     day DATE PRIMARY KEY,
+     left_wins INTEGER DEFAULT 0,
+     right_wins INTEGER DEFAULT 0
+   );
+   ```
 
 ## Controls
 
-- **Tap**: Increment team score
-- **Long press**: Decrement team score (if score > 0)
-- **Finish**: Complete current set and update match totals
-- **Reset**: Reset all scores to zero
+- **Tap zone**: Increment team score (+1)
+- **Long press zone**: Decrement team score (-1) 
+- **Digital Crown**: Fine-tune scores when zone is focused
+- **Finish button**: Complete current set and update match totals
+- **Reset button**: Reset all scores and match totals to zero
+
+## Architecture
+
+The app uses a clean SwiftUI architecture with:
+- **ContentView.swift**: Main scoring interface with gesture handling
+- **SupabaseService.swift**: Cloud synchronization service
+- **State management**: Local state with optimistic cloud updates
+- **Error handling**: Graceful degradation when offline
 
 ## Development
 
-Build commands:
+### Build Commands
 ```bash
-# iOS app
-xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController" build
-
-# watchOS app
+# Primary watchOS app
 xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" build
+
+# iOS companion
+xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController" build
 ```
+
+### Testing
+```bash
+# watchOS tests
+xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
+```
+
+## Dependencies
+
+- [Supabase Swift SDK](https://github.com/supabase/supabase-swift): Real-time database
+- SwiftUI: Native UI framework  
+- WatchKit: Haptic feedback and device interaction

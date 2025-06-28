@@ -30,23 +30,23 @@ jobs:
     - name: Show Available Simulators
       run: xcrun simctl list devices available
     
-    - name: Build iOS App
-      if: contains(matrix.destination, 'iOS')
-      run: |
-        xcodebuild clean build \
-          -project VolleyballController.xcodeproj \
-          -scheme "VolleyballController" \
-          -destination "${{ matrix.destination }}" \
-          CODE_SIGNING_ALLOWED=NO
+    # - name: Build iOS App
+    #   if: contains(matrix.destination, 'iOS')
+    #   run: |
+    #     xcodebuild clean build \
+    #       -project VolleyballController.xcodeproj \
+    #       -scheme "VolleyballController" \
+    #       -destination "${{ matrix.destination }}" \
+    #       CODE_SIGNING_ALLOWED=NO
     
-    - name: Test iOS App
-      if: contains(matrix.destination, 'iOS')
-      run: |
-        xcodebuild test \
-          -project VolleyballController.xcodeproj \
-          -scheme "VolleyballController" \
-          -destination "${{ matrix.destination }}" \
-          CODE_SIGNING_ALLOWED=NO
+    # - name: Test iOS App
+    #   if: contains(matrix.destination, 'iOS')
+    #   run: |
+    #     xcodebuild test \
+    #       -project VolleyballController.xcodeproj \
+    #       -scheme "VolleyballController" \
+    #       -destination "${{ matrix.destination }}" \
+    #       CODE_SIGNING_ALLOWED=NO
     
     - name: Build watchOS App
       if: contains(matrix.destination, 'watchOS')
