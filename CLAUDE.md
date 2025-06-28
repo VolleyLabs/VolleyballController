@@ -49,10 +49,18 @@ xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballContr
 
 ```
 VolleyballController Watch App/
-├── ContentView.swift          # Main UI with scoring logic
-├── SupabaseService.swift      # Cloud sync service
 ├── VolleyballControllerApp.swift # App entry point
-└── Assets.xcassets/          # App icons and colors
+├── Models/
+│   ├── ScoreBoardModel.swift     # Observable game state management
+│   └── ScoreModels.swift         # Data structures for Supabase payloads
+├── Services/
+│   ├── HapticService.swift      # Haptic feedback management
+│   └── SupabaseService.swift    # Cloud sync service
+├── Views/
+│   ├── ContentView.swift        # Main UI composition
+│   ├── ScoreDisplayView.swift   # Score display and reset UI
+│   └── TapZoneView.swift        # Reusable tap zone component
+└── Assets.xcassets/             # App icons and colors
 ```
 
 ## Dependencies

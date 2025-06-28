@@ -24,12 +24,11 @@ class SupabaseService: ObservableObject {
     }
     
     func testConnection() async throws -> Bool {
-        // Simple test: just try to create a basic request to test connectivity
         do {
-            // Test with a simple REST API call using modern API
+            // Test connection by querying existing daily_totals table with minimal data
             let _ = try await client
-                .from("_health")
-                .select("*")
+                .from("daily_totals")
+                .select("day")
                 .limit(1)
                 .execute()
             
@@ -37,14 +36,6 @@ class SupabaseService: ObservableObject {
         } catch {
             // Log the specific error for debugging
             print("Supabase connection test error: \(error)")
-            
-            // Check if this is a "table not found" error (which means connection works)
-            let errorString = error.localizedDescription.lowercased()
-            if errorString.contains("does not exist") || errorString.contains("not found") {
-                // Connection works, just no _health table (which is expected)
-                return true
-            }
-            
             throw error
         }
     }
