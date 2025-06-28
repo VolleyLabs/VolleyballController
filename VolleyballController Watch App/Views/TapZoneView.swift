@@ -12,43 +12,37 @@ struct TapZoneView: View {
     let onScoreChange: () -> Void
     
     var body: some View {
-        Button(action: {
-            if suppress {
-                suppress = false
+        VStack {
+            Text(label)
+                .font(.caption)
+            
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: color))
+                    .scaleEffect(1.5)
+                    .frame(width: 80, height: 60)
             } else {
-                adjustScore(by: 1)
+                Text("\(score)")
+                    .font(.system(size: 60, weight: .bold))
             }
-        }) {
-            VStack {
-                Text(label)
-                    .font(.caption)
-                
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: color))
-                        .scaleEffect(1.5)
-                        .frame(width: 80, height: 60)
-                } else {
-                    Text("\(score)")
-                        .font(.system(size: 60, weight: .bold))
-                }
-            }
-            .foregroundColor(color)
         }
+        .foregroundColor(color)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
-        .buttonStyle(.plain)
         .accessibilityLabel(Text(isLeft ? "Left score area" : "Right score area"))
         .accessibilityRespondsToUserInteraction(true)
         .accessibilityAddTraits(.isButton)
-        .simultaneousGesture(
-            LongPressGesture(minimumDuration: 0.5)
-                .onEnded { _ in
-                    adjustScore(by: -1)
-                    suppress = true
-                },
-            including: .all
-        )
+        .onTapGesture {
+            if !suppress {
+                adjustScore(by: 1)
+            } else {
+                suppress = false
+            }
+        }
+        .onLongPressGesture(minimumDuration: 0.5) {
+            adjustScore(by: -1)
+            suppress = true
+        }
     }
     
     private func adjustScore(by delta: Int) {
