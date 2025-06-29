@@ -13,17 +13,14 @@ struct TapZoneView: View {
     
     var body: some View {
         VStack {
-            Text(label)
-                .font(.caption)
-            
             if isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: color))
                     .scaleEffect(1.5)
-                    .frame(width: 80, height: 60)
+                    .frame(width: 80, height: 80)
             } else {
                 Text("\(score)")
-                    .font(.system(size: 60, weight: .bold))
+                    .font(.system(size: 80, weight: .bold))
             }
         }
         .foregroundColor(color)

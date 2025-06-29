@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C2582E242E09248E00D3B475 /* VolleyballController Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C2582E232E09248E00D3B475 /* VolleyballController Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C27F8C162E093FA9002F5666 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C27F8C152E093FA9002F5666 /* Supabase */; };
 		C2582E4F2E09248F00D3B476 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2582E4E2E09248F00D3B476 /* HealthKit.framework */; };
+		C27F8C162E093FA9002F5666 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C27F8C152E093FA9002F5666 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
