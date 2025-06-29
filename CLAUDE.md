@@ -16,19 +16,19 @@ The watchOS app implements a split-screen volleyball scoreboard with tap zones f
 ### Build
 ```bash
 # Build watchOS app (primary target)
-xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" build
+xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" -destination 'platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation),arch=arm64' build
 
-# Build iOS app (minimal companion)
-xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController" build
+# Build iOS companion app for speech recognition
+xcodebuild -project VolleyballController.xcodeproj -scheme "VolleyballController" -destination 'platform=iOS Simulator,name=iPhone 16,arch=arm64' build
 ```
 
 ### Test
 ```bash
 # Test watchOS app
-xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
+xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballController Watch App" -destination 'platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation),arch=arm64'
 
-# Test iOS app
-xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballController" -destination 'platform=iOS Simulator,name=iPhone 15'
+# Test iOS companion app
+xcodebuild test -project VolleyballController.xcodeproj -scheme "VolleyballController" -destination 'platform=iOS Simulator,name=iPhone 16,arch=arm64'
 ```
 
 ## Key Implementation Notes
