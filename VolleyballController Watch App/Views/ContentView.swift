@@ -7,7 +7,7 @@ struct ContentView: View {
     @FocusState private var initialFocus: Bool
     
     private var finishDisabled: Bool {
-        scoreBoard.isLoading || scoreBoard.leftScore == scoreBoard.rightScore || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0)
+        scoreBoard.isLoading || abs(scoreBoard.leftScore - scoreBoard.rightScore) < 2 || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0)
     }
     
     private var resetDisabled: Bool {
