@@ -16,6 +16,7 @@ class ScoreBoardModel {
     var isLoading: Bool = true
     
     private let workoutKeepAlive = WorkoutKeepAlive()
+    private var lastAction: (isLeft: Bool, wasIncrement: Bool)?
     
     private var today: String {
         ISO8601DateFormatter().string(from: Date()).prefix(10).description
@@ -45,11 +46,61 @@ class ScoreBoardModel {
     }
     
     func adjustScore(isLeft: Bool, delta: Int) {
+        lastAction = (isLeft: isLeft, wasIncrement: delta > 0)
+        
         if isLeft {
             leftScore = max(0, leftScore + delta)
         } else {
             rightScore = max(0, rightScore + delta)
         }
+    }
+    
+    func triggerLeftTap() {
+        leftTapped = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.leftTapped = false
+        }
+    }
+    
+    func triggerRightTap() {
+        rightTapped = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.rightTapped = false
+        }
+    }
+    
+    func handleSpeechCommand(_ command: String) {
+        print("ScoreBoardModel: 🎯 Handling speech command: '\(command)'")
+        switch command {
+        case "left":
+            print("ScoreBoardModel: ⬅️ Processing LEFT command")
+            adjustScore(isLeft: true, delta: 1)
+            HapticService.shared.playLeftHaptic()
+            triggerLeftTap()
+            print("ScoreBoardModel: ✅ LEFT score adjusted to \(leftScore)")
+        case "right":
+            print("ScoreBoardModel: ➡️ Processing RIGHT command")
+            adjustScore(isLeft: false, delta: 1)
+            HapticService.shared.playRightHaptic()
+            triggerRightTap()
+            print("ScoreBoardModel: ✅ RIGHT score adjusted to \(rightScore)")
+        case "cancel":
+            print("ScoreBoardModel: ❌ Processing CANCEL command")
+            undoLastAction()
+            HapticService.shared.playCancelHaptic()
+            print("ScoreBoardModel: ✅ CANCEL action completed")
+        default:
+            print("ScoreBoardModel: ❓ Unknown command: '\(command)'")
+            break
+        }
+    }
+    
+    func undoLastAction() {
+        guard let lastAction = lastAction else { return }
+        
+        let undoDelta = lastAction.wasIncrement ? -1 : 1
+        adjustScore(isLeft: lastAction.isLeft, delta: undoDelta)
+        self.lastAction = nil
     }
     
     func createSetScore() -> SetScore {

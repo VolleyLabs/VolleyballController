@@ -12,4 +12,8 @@ class HapticService {
     func playRightHaptic() {
         WKInterfaceDevice.current().play(.success)
     }
+    
+    func playCancelHaptic() {
+        WKInterfaceDevice.current().play(.failure)
+    }
 }
