@@ -15,10 +15,10 @@ jobs:
       matrix:
         include:
           - platform: iOS
-            destination: "platform=iOS Simulator,name=iPhone 16"
+            destination: "platform=iOS Simulator,name=iPhone 16,arch=arm64"
             target: "VolleyballController"
           - platform: watchOS
-            destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation)"
+            destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation),arch=arm64"
             target: "VolleyballController Watch App"
     
     steps:
@@ -38,7 +38,7 @@ jobs:
       run: |
         xcodebuild clean build \
           -project VolleyballController.xcodeproj \
-          -target "${{ matrix.target }}" \
+          -scheme "${{ matrix.target }}" \
           -destination "${{ matrix.destination }}" \
           CODE_SIGNING_ALLOWED=NO
     
@@ -48,7 +48,7 @@ jobs:
       run: |
         xcodebuild test \
           -project VolleyballController.xcodeproj \
-          -target "${{ matrix.target }}" \
+          -scheme "${{ matrix.target }}" \
           -destination "${{ matrix.destination }}" \
           CODE_SIGNING_ALLOWED=NO
 
