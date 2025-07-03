@@ -15,24 +15,33 @@ jobs:
       matrix:
         include:
           - platform: iOS
-            destination: "platform=iOS Simulator,name=iPhone 16,OS=18.5"
+            destination: "platform=iOS Simulator,OS=18.5,name=iPhone 16"
             target: "VolleyballController"
           - platform: watchOS
-            destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation),OS:11.5"
+            destination: "platform=watchOS Simulator,OS:11.5,name=Apple Watch SE (40mm) (2nd generation)"
             target: "VolleyballController Watch App"
     
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    
+
+    - name: Show available Xcode versions
+      shell: bash
+      run: |
+        echo "::group::Installed Xcodes"
+        echo "Current active → $(xcode-select -p)"
+        for xc in /Applications/Xcode*.app; do
+          # Read the human-readable version from Info.plist
+          ver=$(defaults read "$xc/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null)
+          echo "• $(basename "$xc") — $ver"
+        done
+        echo "::endgroup::"
+
     - name: Select Xcode Version
       run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
     
     - name: Show Xcode Version
       run: xcodebuild -version
-    
-    - name: Show Available Simulators
-      run: xcrun simctl list devices available
     
     - name: Build ${{ matrix.platform }} App
       run: |
