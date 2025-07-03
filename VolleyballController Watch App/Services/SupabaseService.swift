@@ -23,93 +23,131 @@ class SupabaseService: ObservableObject {
         )
     }
     
-    func fetchTodaysSetScore() async throws -> SetScore? {
-        let today = ISO8601DateFormatter().string(from: Date()).prefix(10).description
-        
+    
+    
+    
+    
+    func addPoint(_ point: Point) async throws {
         do {
-            let scores: [SetScore] = try await client
-                .from("daily_sets")
+            try await client
+                .from("points")
+                .insert(point, returning: .minimal)
+                .execute()
+            
+            #if DEBUG
+            print("[Supabase] ✅ points insert OK")
+            #endif
+        } catch {
+            #if DEBUG
+            print("[Supabase] ❌ points insert FAILED:", error)
+            #endif
+            throw error
+        }
+    }
+    
+    func fetchTodaysPoints() async throws -> [Point] {
+        do {
+            let points: [Point] = try await client
+                .from("points")
                 .select("*")
-                .eq("day", value: today)
-                .limit(1)
+                .order("created_at", ascending: true)
                 .execute()
                 .value
             
             #if DEBUG
-            print("[Supabase] ✅ daily_sets fetch OK - found \(scores.count) records")
+            print("[Supabase] ✅ points fetch OK - found \(points.count) records")
             #endif
             
-            return scores.first
+            return points
         } catch {
             #if DEBUG
-            print("[Supabase] ❌ daily_sets fetch FAILED:", error)
+            print("[Supabase] ❌ points fetch FAILED:", error)
             #endif
             throw error
         }
     }
     
-    func fetchTodaysGlobalScore() async throws -> GlobalScore? {
-        let today = ISO8601DateFormatter().string(from: Date()).prefix(10).description
-        
+    func deleteLastPoint() async throws -> Point? {
         do {
-            let scores: [GlobalScore] = try await client
-                .from("daily_totals")
+            // First, get the most recent point
+            let recentPoints: [Point] = try await client
+                .from("points")
                 .select("*")
-                .eq("day", value: today)
+                .order("created_at", ascending: false)
                 .limit(1)
                 .execute()
                 .value
             
+            guard let lastPoint = recentPoints.first, let pointId = lastPoint.id else {
+                #if DEBUG
+                print("[Supabase] ⚠️ No points found to delete")
+                #endif
+                return nil
+            }
+            
+            // Delete the point
+            try await client
+                .from("points")
+                .delete()
+                .eq("id", value: pointId)
+                .execute()
+            
             #if DEBUG
-            print("[Supabase] ✅ daily_totals fetch OK - found \(scores.count) records")
+            print("[Supabase] ✅ Last point deleted successfully")
             #endif
             
-            return scores.first
+            return lastPoint
         } catch {
             #if DEBUG
-            print("[Supabase] ❌ daily_totals fetch FAILED:", error)
+            print("[Supabase] ❌ Delete last point FAILED:", error)
             #endif
             throw error
         }
     }
     
-    func syncSetScore(_ setScore: SetScore) async throws {
+    func deleteSpecificPoint(_ point: Point) async throws {
         do {
+            guard let pointId = point.id else {
+                throw NSError(domain: "SupabaseService", code: 400, userInfo: [NSLocalizedDescriptionKey: "Point ID is required for deletion"])
+            }
+            
             try await client
-                .from("daily_sets")
-                .upsert(setScore,
-                        onConflict: "day",
-                        returning: .minimal)
+                .from("points")
+                .delete()
+                .eq("id", value: pointId)
                 .execute()
             
             #if DEBUG
-            print("[Supabase] ✅ daily_sets upsert OK")
+            print("[Supabase] ✅ Specific point deleted successfully: \(pointId)")
             #endif
         } catch {
             #if DEBUG
-            print("[Supabase] ❌ daily_sets upsert FAILED:", error)
+            print("[Supabase] ❌ Delete specific point FAILED:", error)
             #endif
             throw error
         }
     }
     
-    func syncGlobalScore(_ globalScore: GlobalScore) async throws {
+    func deleteAllTodaysPoints() async throws {
         do {
+            let today = ISO8601DateFormatter().string(from: Date()).prefix(10)
+            
             try await client
-                .from("daily_totals")
-                .upsert(globalScore,
-                        onConflict: "day", 
-                        returning: .minimal)
+                .from("points")
+                .delete()
+                .gte("created_at", value: "\(today)T00:00:00Z")
+                .lt("created_at", value: "\(today)T23:59:59Z")
                 .execute()
             
             #if DEBUG
-            print("[Supabase] ✅ daily_totals upsert OK")
+            print("[Supabase] ✅ All today's points deleted successfully")
             #endif
         } catch {
             #if DEBUG
-            print("[Supabase] ❌ daily_totals upsert FAILED:", error)
+            print("[Supabase] ❌ Delete all points FAILED:", error)
             #endif
             throw error
         }
     }
+    
 }

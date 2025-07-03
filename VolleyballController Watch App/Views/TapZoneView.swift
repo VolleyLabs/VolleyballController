@@ -9,7 +9,7 @@ struct TapZoneView: View {
     @Binding var suppress: Bool
     let isLoading: Bool
     
-    let onScoreChange: () -> Void
+    let onScoreAdjust: (Bool, Int, PointType?, String?) -> Void
     
     var body: some View {
         VStack {
@@ -43,16 +43,14 @@ struct TapZoneView: View {
     }
     
     private func adjustScore(by delta: Int) {
-        let newValue = max(0, score + delta)
-        guard newValue != score else { return }
-        score = newValue
-        onScoreChange()
-        if isLeft {
-            HapticService.shared.playLeftHaptic()
-        } else {
-            HapticService.shared.playRightHaptic()
-        }
+        onScoreAdjust(isLeft, delta, nil, nil)
         flash()
+        
+        // Play haptic feedback only for negative adjustments (long press)
+        // Positive adjustments will get haptic feedback after type selection
+        if delta < 0 {
+            HapticService.shared.playCancelHaptic()
+        }
     }
     
     private func flash() {

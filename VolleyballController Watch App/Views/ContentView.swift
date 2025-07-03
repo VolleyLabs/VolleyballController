@@ -4,29 +4,36 @@ import WatchKit
 
 struct ContentView: View {
     @State private var scoreBoard = ScoreBoardModel()
+    @State private var showingMenu = false
+    @State private var showingHistory = false
     @FocusState private var initialFocus: Bool
-    
-    private var finishDisabled: Bool {
-        scoreBoard.isLoading || abs(scoreBoard.leftScore - scoreBoard.rightScore) < 2 || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0)
-    }
     
     private var resetDisabled: Bool {
         scoreBoard.isLoading || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0 && scoreBoard.leftWins == 0 && scoreBoard.rightWins == 0)
     }
     
     
-    private func syncSetScore() {
-        Task {
-            let payload = scoreBoard.createSetScore()
-            try? await SupabaseService.shared.syncSetScore(payload)
+    
+    private func handleScoreAdjust(isLeft: Bool, delta: Int, pointType: PointType?, player: String?) {
+        scoreBoard.requestScoreAdjustment(isLeft: isLeft, delta: delta, player: player)
+        
+        // Add haptic feedback
+        if isLeft {
+            HapticService.shared.playLeftHaptic()
+            scoreBoard.triggerLeftTap()
+        } else {
+            HapticService.shared.playRightHaptic()
+            scoreBoard.triggerRightTap()
         }
+        
     }
     
-    private func syncGlobalScore() {
-        Task {
-            let payload = scoreBoard.createGlobalScore()
-            try? await SupabaseService.shared.syncGlobalScore(payload)
-        }
+    private func handleActionTypeSelected(_ pointType: PointType) {
+        scoreBoard.confirmScoreAdjustment(pointType: pointType)
+    }
+    
+    private func handleActionTypeCancelled() {
+        scoreBoard.cancelScoreAdjustment()
     }
 
     var body: some View {
@@ -40,7 +47,7 @@ struct ContentView: View {
                     tapped: $scoreBoard.leftTapped,
                     suppress: $scoreBoard.suppressLeftTap,
                     isLoading: scoreBoard.isLoading,
-                    onScoreChange: syncSetScore
+                    onScoreAdjust: handleScoreAdjust
                 )
                 .focused($initialFocus)
                 
@@ -52,7 +59,7 @@ struct ContentView: View {
                     tapped: $scoreBoard.rightTapped,
                     suppress: $scoreBoard.suppressRightTap,
                     isLoading: scoreBoard.isLoading,
-                    onScoreChange: syncSetScore
+                    onScoreAdjust: handleScoreAdjust
                 )
             }
             .onAppear {
@@ -61,33 +68,21 @@ struct ContentView: View {
 
             
             VStack {
-                HStack(spacing: 8) {
-                    Button("Finish") {
-                        scoreBoard.finishSet()
-                        syncSetScore()
-                        syncGlobalScore()
+                HStack {
+                    Spacer()
+                    Button {
+                        showingMenu = true
+                    } label: {
+                        Text("⚙️")
+                            .font(.title3)
                     }
-                    .font(.caption2)
                     .buttonStyle(.borderless)
                     .focusable(false)
-                    .disabled(finishDisabled)
-                    .frame(maxWidth: .infinity)
-                    .padding(8)
-                    .background(finishDisabled ? Color.gray.opacity(0.02) : Color.white.opacity(0.02), in: RoundedRectangle(cornerRadius: 8))
-                    
-                    Button("Reset") {
-                        scoreBoard.resetAll()
-                        syncGlobalScore()
-                        syncSetScore()
-                    }
-                    .font(.caption2)
-                    .buttonStyle(.borderless)
-                    .focusable(false)
-                    .disabled(resetDisabled)
-                    .frame(maxWidth: .infinity)
-                    .padding(8)
-                    .background(finishDisabled ? Color.gray.opacity(0.02) : Color.white.opacity(0.02), in: RoundedRectangle(cornerRadius: 8))
+                    .frame(width: 30, height: 30)
+                    .background(Color.white.opacity(0.1), in: Circle())
+                    Spacer()
                 }
+                .padding(.top, 4)
                 Spacer()
             }
             
@@ -126,8 +121,46 @@ struct ContentView: View {
             .ignoresSafeArea()
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(
+            Group {
+                if scoreBoard.showingActionTypeSelection {
+                    ActionTypeSelectionView(
+                        isLeft: scoreBoard.pendingScoreAdjustment?.isLeft ?? true,
+                        onActionSelected: handleActionTypeSelected,
+                        onCancel: handleActionTypeCancelled
+                    )
+                    .zIndex(1000)
+                } else if showingMenu {
+                    MenuView(
+                        points: scoreBoard.localPointsHistory,
+                        onReset: {
+                            scoreBoard.resetAll()
+                        },
+                        onShowHistory: {
+                            showingHistory = true
+                        },
+                        onCancel: {
+                            showingMenu = false
+                        },
+                        resetDisabled: resetDisabled
+                    )
+                    .zIndex(1000)
+                }
+            }
+        )
         .onAppear {
             initializeApp()
+        }
+        .sheet(isPresented: $showingHistory) {
+            PointsHistoryView(
+                points: scoreBoard.localPointsHistory,
+                onClose: {
+                    showingHistory = false
+                },
+                onDeletePoint: { point in
+                    scoreBoard.deleteSpecificPoint(point)
+                }
+            )
         }
     }
     
