@@ -14,8 +14,11 @@ class SupabaseService: ObservableObject {
 
         let url = Bundle.main.object(forInfoDictionaryKey: "SUPABASE_URL") as? String
                   ?? "https://ufejocelbvrvgmoewhaw.supabase.co"
+        let defaultAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6" +
+                            "InVmZWpvY2VsYnZydmdtb2V3aGF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE2NTU4" +
+                            "NDksImV4cCI6MjA1NzIzMTg0OX0.HoZLb6kO9m3Mt23VCTkdLUTJZM-5HJG3jiRajDcufDM"
         let anonKey = Bundle.main.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String
-                     ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmZWpvY2VsYnZydmdtb2V3aGF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE2NTU4NDksImV4cCI6MjA1NzIzMTg0OX0.HoZLb6kO9m3Mt23VCTkdLUTJZM-5HJG3jiRajDcufDM"
+                     ?? defaultAnonKey
 
         client = SupabaseClient(
             supabaseURL: URL(string: url)!,
@@ -55,7 +58,8 @@ class SupabaseService: ObservableObject {
                 .value
 
             #if DEBUG
-            print("[Supabase] ✅ points fetch OK - found \(points.count) records for today (\(today))")
+            print("[Supabase] ✅ points fetch OK - found \(points.count) records " +
+                  "for today (\(today))")
             #endif
 
             return points
@@ -108,7 +112,9 @@ class SupabaseService: ObservableObject {
     func deleteSpecificPoint(_ point: Point) async throws {
         do {
             guard let pointId = point.id else {
-                throw NSError(domain: "SupabaseService", code: 400, userInfo: [NSLocalizedDescriptionKey: "Point ID is required for deletion"])
+                let errorMessage = "Point ID is required for deletion"
+                throw NSError(domain: "SupabaseService", code: 400,
+                             userInfo: [NSLocalizedDescriptionKey: errorMessage])
             }
 
             try await client

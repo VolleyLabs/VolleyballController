@@ -1,0 +1,48 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Project Architecture Guide
+
+## Dual-Target Structure
+This project has two main targets:
+1. **iPhone App** (`VolleyballController/`) - Companion app for speech recognition
+2. **watchOS App** (`VolleyballController Watch App/`) - Main volleyball scoring interface
+
+## iPhone App Structure
+- [ContentView.swift](mdc:VolleyballController/ContentView.swift) - Main UI showing connection status and command history
+- [SpeechRecognitionService.swift](mdc:VolleyballController/SpeechRecognitionService.swift) - Handles speech-to-text and WatchConnectivity
+- [VolleyballControllerApp.swift](mdc:VolleyballController/VolleyballControllerApp.swift) - App entry point
+
+## watchOS App Structure
+
+### Models
+- [ScoreBoardModel.swift](mdc:VolleyballController Watch App/Models/ScoreBoardModel.swift) - Core scoring logic and data management
+- [Point.swift](mdc:VolleyballController Watch App/Models/Point.swift) - Point data structure
+- [PointType.swift](mdc:VolleyballController Watch App/Models/PointType.swift) - Point type enumeration
+- [PointWinner.swift](mdc:VolleyballController Watch App/Models/PointWinner.swift) - Winner enumeration
+
+### Views
+- [ContentView.swift](mdc:VolleyballController Watch App/Views/ContentView.swift) - Main scoring interface with tap zones
+- [TapZoneView.swift](mdc:VolleyballController Watch App/Views/TapZoneView.swift) - Individual team scoring area
+- [MenuView.swift](mdc:VolleyballController Watch App/Views/MenuView.swift) - Settings and reset options
+- [PointsHistoryView.swift](mdc:VolleyballController Watch App/Views/PointsHistoryView.swift) - Historical scoring data
+- [ActionTypeSelectionView.swift](mdc:VolleyballController Watch App/Views/ActionTypeSelectionView.swift) - Point type selection overlay
+
+### Services
+- [SupabaseService.swift](mdc:VolleyballController Watch App/Services/SupabaseService.swift) - Database operations
+- [HapticService.swift](mdc:VolleyballController Watch App/Services/HapticService.swift) - Haptic feedback
+- [WorkoutKeepAlive.swift](mdc:VolleyballController Watch App/Services/WorkoutKeepAlive.swift) - Prevents app from sleeping during games
+
+## Communication Flow
+1. Speech commands on iPhone → [SpeechRecognitionService.swift](mdc:VolleyballController/SpeechRecognitionService.swift)
+2. WatchConnectivity → [ScoreBoardModel.swift](mdc:VolleyballController Watch App/Models/ScoreBoardModel.swift)
+3. Score updates → [SupabaseService.swift](mdc:VolleyballController Watch App/Services/SupabaseService.swift)
+4. UI updates → Watch views
+
+## Key Patterns
+- **Observable Pattern**: Use `@Observable` for data models
+- **Async/Await**: All database operations use modern concurrency
+- **Optimistic Updates**: Local state updates immediately, sync with database in background
+- **Error Handling**: Graceful degradation when database operations fail

@@ -1,0 +1,76 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Service Layer Patterns
+
+## Database Service Pattern
+Follow the pattern in [SupabaseService.swift](mdc:VolleyballController Watch App/Services/SupabaseService.swift):
+
+### Singleton Pattern
+- Use `static let shared = ServiceName()` for singleton services
+- Make initializer `private` to enforce singleton usage
+- Store configuration in bundle or environment variables
+
+### Async Operations
+- All database operations use `async throws` pattern
+- Use `#if DEBUG` blocks for logging
+- Implement proper error handling and propagation
+- Return meaningful error messages
+
+### Example Pattern:
+```swift
+func operationName() async throws -> ReturnType {
+    do {
+        let result = try await client.operation()
+        #if DEBUG
+        print("[Service] ✅ Operation succeeded")
+        #endif
+        return result
+    } catch {
+        #if DEBUG
+        print("[Service] ❌ Operation failed:", error)
+        #endif
+        throw error
+    }
+}
+```
+
+## Communication Services
+See [SpeechRecognitionService.swift](mdc:VolleyballController/SpeechRecognitionService.swift) for complex service patterns:
+
+### State Management
+- Use `@Observable` for services that provide UI state
+- Implement proper cleanup in `deinit`
+- Use weak references to prevent retain cycles
+
+### Delegate Patterns
+- Implement protocol delegates for system frameworks
+- Handle all delegate methods appropriately
+- Update UI state on main thread: `DispatchQueue.main.async`
+
+### Function Decomposition
+- Break complex functions into focused methods
+- Keep functions under 50 lines
+- Use descriptive method names that explain purpose
+
+## Utility Services
+Follow patterns in [HapticService.swift](mdc:VolleyballController Watch App/Services/HapticService.swift) and [WorkoutKeepAlive.swift](mdc:VolleyballController Watch App/Services/WorkoutKeepAlive.swift):
+
+### Simple Services
+- Single responsibility principle
+- Clear public API with minimal methods
+- Handle errors gracefully without crashing
+
+### System Integration
+- Check system availability before using features
+- Provide fallback behavior when features unavailable
+- Use appropriate permissions and entitlements
+
+## Error Handling Strategy
+- Use `Result<Success, Failure>` for operations that can fail
+- Create custom error types when needed
+- Log errors appropriately (debug builds only)
+- Never crash on expected errors
+- Provide user-friendly error messages

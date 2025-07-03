@@ -13,9 +13,9 @@ struct ActionTypeSelectionView: View {
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 8) {
                 ForEach(PointType.allCases, id: \.self) { pointType in
-                    Button(action: {
+                    Button {
                         onActionSelected(pointType)
-                    }) {
+                    } label: {
                         VStack(spacing: 2) {
                             Text(pointType.emoji)
                                 .font(.title2)

@@ -85,7 +85,8 @@ struct MenuView: View {
                 onCancel()
             }
         } message: {
-            Text("This will delete all today's points from the database and reset all scores. This action cannot be undone.")
+            Text("This will delete all today's points from the database and reset all scores. " +
+                 "This action cannot be undone.")
         }
     }
 }

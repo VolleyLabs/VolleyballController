@@ -9,7 +9,10 @@ struct ContentView: View {
     @FocusState private var initialFocus: Bool
 
     private var resetDisabled: Bool {
-        scoreBoard.isLoading || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0 && scoreBoard.leftWins == 0 && scoreBoard.rightWins == 0)
+        let isLoadingOrError = scoreBoard.isLoading || scoreBoard.connectionStatus == "Error"
+        let allScoresZero = scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0 &&
+                           scoreBoard.leftWins == 0 && scoreBoard.rightWins == 0
+        return isLoadingOrError || allScoresZero
     }
 
     private func handleScoreAdjust(isLeft: Bool, delta: Int, pointType: PointType?, player: String?) {

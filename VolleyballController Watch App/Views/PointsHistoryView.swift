@@ -183,7 +183,10 @@ struct PointRowView: View {
             let timePart = String(dateString.split(separator: "T").last?.prefix(5) ?? "")
             // Try to parse as UTC time and convert to local
             let today = Calendar.current.dateInterval(of: .day, for: Date())?.start ?? Date()
-            let timeString = "\(Calendar.current.component(.year, from: today))-\(String(format: "%02d", Calendar.current.component(.month, from: today)))-\(String(format: "%02d", Calendar.current.component(.day, from: today))) \(timePart):00"
+            let year = Calendar.current.component(.year, from: today)
+            let month = String(format: "%02d", Calendar.current.component(.month, from: today))
+            let day = String(format: "%02d", Calendar.current.component(.day, from: today))
+            let timeString = "\(year)-\(month)-\(day) \(timePart):00"
 
             let fallbackFormatter = DateFormatter()
             fallbackFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

@@ -63,38 +63,38 @@ final class WorkoutKeepAlive: NSObject, HKWorkoutSessionDelegate {
         cfg.activityType = .other                   // generic workout
 
         do {
-            let s = try HKWorkoutSession(healthStore: store, configuration: cfg)
-            s.delegate = self
+            let session = try HKWorkoutSession(healthStore: store, configuration: cfg)
+            session.delegate = self
 
             // Prepare the session first
-            s.prepare()
+            session.prepare()
 
             // Wait a moment for preparation, then start
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                 guard let self = self else { return }
 
-                let b = s.associatedWorkoutBuilder()
-                b.dataSource = HKLiveWorkoutDataSource(healthStore: self.store, workoutConfiguration: cfg)
+                let builder = session.associatedWorkoutBuilder()
+                builder.dataSource = HKLiveWorkoutDataSource(healthStore: self.store, workoutConfiguration: cfg)
 
                 // Begin collection before starting activity
-                b.beginCollection(withStart: Date()) { [weak self] success, error in
+                builder.beginCollection(withStart: Date()) { [weak self] success, error in
                     DispatchQueue.main.async {
                         if success {
                             print("Collection started successfully")
                             // Now start the actual workout session
-                            s.startActivity(with: Date())
+                            session.startActivity(with: Date())
                             print("Workout session started successfully - app will stay active")
                         } else {
                             print("Failed to begin collection: \(error?.localizedDescription ?? "Unknown error")")
                             print("Continuing without workout session - app may sleep during long sessions")
                             // Don't clean up yet, try to start anyway
-                            s.startActivity(with: Date())
+                            session.startActivity(with: Date())
                         }
                     }
                 }
 
-                self.session = s
-                self.builder = b
+                self.session = session
+                self.builder = builder
             }
         } catch {
             print("Workout start failed: \(error.localizedDescription)")
@@ -124,13 +124,13 @@ final class WorkoutKeepAlive: NSObject, HKWorkoutSessionDelegate {
     }
 
     // Cleanup if system ends the workout externally
-    func workoutSession(_ s: HKWorkoutSession,
-                        didChangeTo to: HKWorkoutSessionState,
-                        from from: HKWorkoutSessionState,
+    func workoutSession(_ workoutSession: HKWorkoutSession,
+                        didChangeTo newState: HKWorkoutSessionState,
+                        from fromState: HKWorkoutSessionState,
                         date: Date) {
-        print("Workout session state changed from \(from.rawValue) to \(to.rawValue)")
+        print("Workout session state changed from \(fromState.rawValue) to \(newState.rawValue)")
 
-        switch to {
+        switch newState {
         case .ended:
             print("Workout session ended")
             session = nil
@@ -146,7 +146,7 @@ final class WorkoutKeepAlive: NSObject, HKWorkoutSessionDelegate {
         case .prepared:
             print("Workout session prepared")
         @unknown default:
-            print("Unknown workout session state: \(to.rawValue)")
+            print("Unknown workout session state: \(newState.rawValue)")
         }
     }
 

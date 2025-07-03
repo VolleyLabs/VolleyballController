@@ -1,0 +1,33 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Swift Code Quality Guidelines
+
+## SwiftLint Compliance
+This project uses SwiftLint to maintain code quality. Always run `swiftlint lint` before committing changes.
+
+### Critical Rules
+- **Line Length**: Maximum 120 characters for most lines, 200 for exceptional cases
+- **Function Complexity**: Keep cyclomatic complexity ≤ 10
+- **Function Body Length**: Maximum 50 lines excluding comments and whitespace
+- **Type Body Length**: Maximum 250 lines excluding comments and whitespace
+- **File Length**: Maximum 400 lines
+
+### Naming Conventions
+- Use descriptive variable names (minimum 3 characters)
+- Avoid single-letter variables like `s`, `b`, `to`
+- Use camelCase for variables and functions
+- Use PascalCase for types and protocols
+
+### Code Structure
+- Break complex functions into smaller, focused methods
+- Use structs instead of large tuples (max 2 members in tuples)
+- Remove redundant string enum values when they match the case name
+- Use explicit parameter names instead of trailing closures when multiple closures are present
+
+### Key Files to Follow These Patterns
+- [ScoreBoardModel.swift](mdc:VolleyballController Watch App/Models/ScoreBoardModel.swift) - Main business logic model
+- [SpeechRecognitionService.swift](mdc:VolleyballController/SpeechRecognitionService.swift) - Complex service with proper function decomposition
+- [SupabaseService.swift](mdc:VolleyballController Watch App/Services/SupabaseService.swift) - Database service with proper error handling

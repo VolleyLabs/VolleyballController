@@ -1,0 +1,56 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Testing and CI Guidelines
+
+## Continuous Integration
+This project uses GitHub Actions for CI. See [ci.yml](mdc:.github/workflows/ci.yml) for the configuration.
+
+### Build Matrix
+- **iOS**: iPhone 16 Simulator
+- **watchOS**: Apple Watch SE (40mm) (2nd generation)
+- **Xcode**: Latest version on macOS-15
+
+### CI Checks
+1. **Build Verification**: Both iOS and watchOS targets must build successfully
+2. **Tests**: iOS tests run automatically (watchOS tests may have issues)
+3. **SwiftLint**: Code quality checks must pass
+4. **Code Signing**: Disabled for CI (`CODE_SIGNING_ALLOWED=NO`)
+
+## Testing Strategy
+
+### Unit Tests
+- Test business logic in models, especially [ScoreBoardModel.swift](mdc:VolleyballController Watch App/Models/ScoreBoardModel.swift)
+- Mock external dependencies (Supabase, WatchConnectivity)
+- Test edge cases and error conditions
+
+### Integration Tests
+- Test data flow between services
+- Verify database operations work correctly
+- Test speech recognition command processing
+
+### UI Tests
+- Test main user flows on both platforms
+- Verify accessibility features work
+- Test navigation and state management
+
+## Pre-Commit Checklist
+1. Run `swiftlint lint` and fix all violations
+2. Build both targets successfully locally
+3. Run unit tests: `xcodebuild test -project VolleyballController.xcodeproj -target VolleyballController`
+4. Verify no compiler warnings
+5. Test on actual devices when possible
+
+## Performance Testing
+- Test app performance during long volleyball games
+- Verify memory usage stays reasonable with large point histories
+- Test battery impact on Apple Watch
+- Verify database sync performance with poor network conditions
+
+## Debugging Guidelines
+- Use `#if DEBUG` for debug-only code
+- Implement comprehensive logging in services
+- Use SwiftUI preview providers for UI development
+- Test with various data states (empty, loading, error, populated)

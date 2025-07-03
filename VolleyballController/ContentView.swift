@@ -18,7 +18,10 @@ struct ContentView: View {
 
                 VStack(spacing: 16) {
                     HStack {
-                        Image(systemName: speechService.hasPermission ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        let systemName = speechService.hasPermission
+                            ? "checkmark.circle.fill"
+                            : "xmark.circle.fill"
+                        Image(systemName: systemName)
                             .foregroundColor(speechService.hasPermission ? .green : .red)
                         Text("Speech Recognition")
                         Spacer()
@@ -27,7 +30,10 @@ struct ContentView: View {
                     }
 
                     HStack {
-                        Image(systemName: speechService.isWatchConnected ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        let watchSystemName = speechService.isWatchConnected
+                            ? "checkmark.circle.fill"
+                            : "xmark.circle.fill"
+                        Image(systemName: watchSystemName)
                             .foregroundColor(speechService.isWatchConnected ? .green : .red)
                         Text("Watch Connection")
                         Spacer()

@@ -1,0 +1,53 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# SwiftUI Patterns and Best Practices
+
+## View Architecture
+Follow the patterns established in the existing views for consistency.
+
+### Main Interface Pattern
+See [ContentView.swift](mdc:VolleyballController Watch App/Views/ContentView.swift) for the main scoring interface:
+- Use `ZStack` for overlays and modal presentations
+- Implement `@FocusState` for watchOS navigation
+- Use `safeAreaInset` for status information
+- Handle loading states with `ProgressView`
+
+### Custom Components
+- [TapZoneView.swift](mdc:VolleyballController Watch App/Views/TapZoneView.swift) - Reusable scoring area component
+- Use `@Binding` for two-way data flow
+- Implement custom `ButtonStyle` for consistent interactions
+- Use haptic feedback for user actions
+
+### Modal Presentations
+- [ActionTypeSelectionView.swift](mdc:VolleyballController Watch App/Views/ActionTypeSelectionView.swift) - Overlay selection pattern
+- [MenuView.swift](mdc:VolleyballController Watch App/Views/MenuView.swift) - Menu overlay with background tap handling
+- Use `zIndex` for proper layering
+- Implement background dismissal with `.onTapGesture`
+
+### List Patterns
+See [PointsHistoryView.swift](mdc:VolleyballController Watch App/Views/PointsHistoryView.swift):
+- Use `LazyVStack` for performance with large datasets
+- Implement swipe actions for item manipulation
+- Group data by date/category using `Section`
+- Handle empty states gracefully
+
+## State Management
+- Use `@Observable` macro for data models (not `@ObservableObject`)
+- Prefer `@State` for local view state
+- Use `@Binding` for parent-child communication
+- Implement computed properties for derived state
+
+## Performance Tips
+- Use `LazyVGrid`/`LazyVStack` for large collections
+- Implement proper `id` parameters for `ForEach`
+- Avoid heavy computations in view bodies
+- Use `.task` for async operations in views
+
+## watchOS Specific
+- Design for Digital Crown navigation
+- Use appropriate font sizes for small screens
+- Implement proper focus management
+- Consider battery impact of animations and updates
