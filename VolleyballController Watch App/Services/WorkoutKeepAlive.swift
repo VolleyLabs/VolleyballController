@@ -77,7 +77,7 @@ final class WorkoutKeepAlive: NSObject, HKWorkoutSessionDelegate {
                 builder.dataSource = HKLiveWorkoutDataSource(healthStore: self.store, workoutConfiguration: cfg)
 
                 // Begin collection before starting activity
-                builder.beginCollection(withStart: Date()) { [weak self] success, error in
+                builder.beginCollection(withStart: Date()) { success, error in
                     DispatchQueue.main.async {
                         if success {
                             print("Collection started successfully")
