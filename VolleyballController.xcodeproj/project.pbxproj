@@ -636,7 +636,7 @@
 				CODE_SIGN_ENTITLEMENTS = "VolleyballController Watch App/VolleyballController Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "VolleyballController-Watch-App-Info.plist";
@@ -645,14 +645,14 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Needed to record a dummy workout.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to recognize voice commands for adjusting volleyball scores hands-free.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.personal.VolleyballController;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.havendv.VolleyballController;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballController.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -673,7 +673,7 @@
 				CODE_SIGN_ENTITLEMENTS = "VolleyballController Watch App/VolleyballController Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "VolleyballController-Watch-App-Info.plist";
@@ -682,14 +682,14 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Needed to record a dummy workout.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to recognize voice commands for adjusting volleyball scores hands-free.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.personal.VolleyballController;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.havendv.VolleyballController;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballController.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -710,7 +710,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
@@ -727,7 +727,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -743,7 +743,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyballController;
@@ -760,7 +760,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -780,7 +780,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -800,7 +800,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -820,7 +820,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballControllerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -839,7 +839,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.personal.VolleyballControllerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.havendv.VolleyballControllerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -859,7 +859,7 @@
 				DEVELOPMENT_TEAM = PA34R6A28G;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.havendv.VolleyballController-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
@@ -881,7 +881,7 @@
 				DEVELOPMENT_TEAM = PA34R6A28G;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.havendv.VolleyballController-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SUPABASE_ANON_KEY = "$(SUPABASE_ANON_KEY)";
@@ -900,10 +900,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.havendv.VolleyballController-Watch-AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -919,10 +919,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PA34R6A28G;
+				DEVELOPMENT_TEAM = 9RFL8N9T85;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.personal.VolleyballController-Watch-AppUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.havendv.VolleyballController-Watch-AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;

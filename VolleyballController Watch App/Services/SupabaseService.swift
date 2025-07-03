@@ -47,15 +47,19 @@ class SupabaseService: ObservableObject {
     
     func fetchTodaysPoints() async throws -> [Point] {
         do {
+            let today = ISO8601DateFormatter().string(from: Date()).prefix(10)
+            
             let points: [Point] = try await client
                 .from("points")
                 .select("*")
+                .gte("created_at", value: "\(today)T00:00:00Z")
+                .lt("created_at", value: "\(today)T23:59:59Z")
                 .order("created_at", ascending: true)
                 .execute()
                 .value
             
             #if DEBUG
-            print("[Supabase] ✅ points fetch OK - found \(points.count) records")
+            print("[Supabase] ✅ points fetch OK - found \(points.count) records for today (\(today))")
             #endif
             
             return points
