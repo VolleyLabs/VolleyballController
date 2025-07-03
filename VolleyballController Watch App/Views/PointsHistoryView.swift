@@ -128,7 +128,7 @@ struct PointRowView: View {
             Text(scoreString)
                 .font(.caption)
                 .foregroundColor(.white)
-                .frame(width: 30)
+                .frame(width: 40)
 
             if let type = point.type, type != .other {
                 Text(type.emoji)
@@ -143,12 +143,12 @@ struct PointRowView: View {
                     .foregroundColor(.white)
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 2)
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(point.winner == .left ? Color.blue.opacity(0.7) : Color.red.opacity(0.7))
         .cornerRadius(8)
-        .padding(.horizontal, 4)
+        .padding(.horizontal, 2)
         .padding(.vertical, 2)
     }
 
