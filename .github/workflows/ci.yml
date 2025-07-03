@@ -18,7 +18,7 @@ jobs:
             destination: "platform=iOS Simulator,OS=18.5,name=iPhone 16"
             target: "VolleyballController"
           - platform: watchOS
-            destination: "platform=watchOS Simulator,OS:11.5,name=Apple Watch SE (40mm) (2nd generation)"
+            destination: "platform=watchOS Simulator,OS=11.5,name=Apple Watch SE (40mm) (2nd generation)"
             target: "VolleyballController Watch App"
     
     steps:
