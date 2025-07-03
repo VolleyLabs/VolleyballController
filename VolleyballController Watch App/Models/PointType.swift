@@ -6,7 +6,7 @@ enum PointType: String, Codable, CaseIterable {
     case block = "block"
     case error = "error"
     case other = "unspecified"
-    
+
     var emoji: String {
         switch self {
         case .ace: return "🎯"
@@ -16,7 +16,7 @@ enum PointType: String, Codable, CaseIterable {
         case .other: return "∅"
         }
     }
-    
+
     var displayName: String {
         switch self {
         case .ace: return "Ace"

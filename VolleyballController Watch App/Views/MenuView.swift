@@ -6,9 +6,9 @@ struct MenuView: View {
     let onShowHistory: () -> Void
     let onCancel: () -> Void
     let resetDisabled: Bool
-    
+
     @State private var showingResetConfirmation = false
-    
+
     var body: some View {
         ZStack {
             // Background overlay
@@ -17,13 +17,13 @@ struct MenuView: View {
                 .onTapGesture {
                     onCancel()
                 }
-            
+
             // Menu content
             VStack(spacing: 12) {
                 Text("Menu")
                     .font(.headline)
                     .foregroundColor(.white)
-                
+
                 VStack(spacing: 6) {
                     Button {
                         onShowHistory()
@@ -40,7 +40,7 @@ struct MenuView: View {
                     .foregroundColor(.white)
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(8)
-                    
+
                     Button {
                         showingResetConfirmation = true
                     } label: {
@@ -56,7 +56,7 @@ struct MenuView: View {
                     .foregroundColor(resetDisabled ? .gray : .white)
                     .background(resetDisabled ? Color.gray.opacity(0.3) : Color.white.opacity(0.1))
                     .cornerRadius(8)
-                    
+
                     Button {
                         onCancel()
                     } label: {

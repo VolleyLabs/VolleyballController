@@ -7,16 +7,14 @@ struct ContentView: View {
     @State private var showingMenu = false
     @State private var showingHistory = false
     @FocusState private var initialFocus: Bool
-    
+
     private var resetDisabled: Bool {
         scoreBoard.isLoading || scoreBoard.connectionStatus == "Error" || (scoreBoard.leftScore == 0 && scoreBoard.rightScore == 0 && scoreBoard.leftWins == 0 && scoreBoard.rightWins == 0)
     }
-    
-    
-    
+
     private func handleScoreAdjust(isLeft: Bool, delta: Int, pointType: PointType?, player: String?) {
         scoreBoard.requestScoreAdjustment(isLeft: isLeft, delta: delta, player: player)
-        
+
         // Add haptic feedback
         if isLeft {
             HapticService.shared.playLeftHaptic()
@@ -25,13 +23,13 @@ struct ContentView: View {
             HapticService.shared.playRightHaptic()
             scoreBoard.triggerRightTap()
         }
-        
+
     }
-    
+
     private func handleActionTypeSelected(_ pointType: PointType) {
         scoreBoard.confirmScoreAdjustment(pointType: pointType)
     }
-    
+
     private func handleActionTypeCancelled() {
         scoreBoard.cancelScoreAdjustment()
     }
@@ -50,7 +48,7 @@ struct ContentView: View {
                     onScoreAdjust: handleScoreAdjust
                 )
                 .focused($initialFocus)
-                
+
                 TapZoneView(
                     color: .red,
                     label: "RIGHT",
@@ -66,7 +64,6 @@ struct ContentView: View {
                 initialFocus = true
             }
 
-            
             VStack {
                 HStack {
                     Spacer()
@@ -85,7 +82,7 @@ struct ContentView: View {
                 .padding(.top, 4)
                 Spacer()
             }
-            
+
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 2) {
                     if scoreBoard.isLoading {
@@ -163,12 +160,12 @@ struct ContentView: View {
             )
         }
     }
-    
+
     private func initializeApp() {
         // Load data in background without blocking UI
         Task(priority: .userInitiated) {
             let success = await scoreBoard.loadInitialState()
-            
+
             // Handle UI updates on main thread
             if success {
                 scoreBoard.updateConnectionStatus("OK", color: .green)

@@ -4,7 +4,7 @@ struct PointsHistoryView: View {
     let points: [Point]
     let onClose: () -> Void
     let onDeletePoint: (Point) -> Void
-    
+
     private var groupedPoints: [String: [Point]] {
         Dictionary(grouping: points) { point in
             guard let createdAt = point.createdAt else { return "Unknown" }
@@ -12,11 +12,11 @@ struct PointsHistoryView: View {
             return String(date)
         }
     }
-    
+
     private var sortedDates: [String] {
         groupedPoints.keys.sorted(by: >)
     }
-    
+
     var body: some View {
         NavigationView {
             listContent
@@ -31,7 +31,7 @@ struct PointsHistoryView: View {
                 }
         }
     }
-    
+
     private var listContent: some View {
         List {
             if points.isEmpty {
@@ -41,31 +41,31 @@ struct PointsHistoryView: View {
             }
         }
     }
-    
+
     private var emptyStateView: some View {
         Text("No points recorded today")
             .foregroundColor(.secondary)
             .italic()
     }
-    
+
     private var pointsSections: some View {
         ForEach(sortedDates, id: \.self) { date in
             pointSection(for: date)
         }
     }
-    
+
     private func pointSection(for date: String) -> some View {
         Section(header: Text(formatDate(date))) {
             pointRows(for: date)
         }
     }
-    
+
     private func pointRows(for date: String) -> some View {
         let datePoints = groupedPoints[date] ?? []
         let pointsWithScores = calculateRunningScores(for: datePoints)
         let reversedPoints = pointsWithScores.reversed()
-        
-        return ForEach(Array(reversedPoints.enumerated()), id: \.offset) { index, pointWithScore in
+
+        return ForEach(Array(reversedPoints.enumerated()), id: \.offset) { _, pointWithScore in
             PointRowView(point: pointWithScore.point, scoreString: pointWithScore.scoreString)
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
@@ -76,12 +76,12 @@ struct PointsHistoryView: View {
                 }
         }
     }
-    
+
     private func calculateRunningScores(for points: [Point]) -> [(point: Point, scoreString: String)] {
         var leftScore = 0
         var rightScore = 0
         var result: [(point: Point, scoreString: String)] = []
-        
+
         for point in points {
             // Add the point to the score
             if point.winner == .left {
@@ -89,32 +89,32 @@ struct PointsHistoryView: View {
             } else {
                 rightScore += 1
             }
-            
+
             // Check if this completes a set (25+ with 2+ advantage)
             let isSetComplete = (leftScore >= 25 || rightScore >= 25) && abs(leftScore - rightScore) >= 2
-            
+
             let scoreString = "\(leftScore)-\(rightScore)"
             result.append((point: point, scoreString: scoreString))
-            
+
             // If set is complete, reset scores for next set
             if isSetComplete {
                 leftScore = 0
                 rightScore = 0
             }
         }
-        
+
         return result
     }
-    
+
     private func formatDate(_ dateString: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        
+
         if let date = formatter.date(from: dateString) {
             formatter.dateStyle = .medium
             return formatter.string(from: date)
         }
-        
+
         return dateString
     }
 }
@@ -122,21 +122,21 @@ struct PointsHistoryView: View {
 struct PointRowView: View {
     let point: Point
     let scoreString: String
-    
+
     var body: some View {
         HStack {
             Text(scoreString)
                 .font(.caption)
                 .foregroundColor(.white)
                 .frame(width: 30)
-            
+
             if let type = point.type, type != .other {
                 Text(type.emoji)
                     .font(.title3)
             }
-            
+
             Spacer()
-            
+
             if let createdAt = point.createdAt {
                 Text(formatTime(createdAt))
                     .font(.caption2)
@@ -151,7 +151,7 @@ struct PointRowView: View {
         .padding(.horizontal, 4)
         .padding(.vertical, 2)
     }
-    
+
     private func formatTime(_ dateString: String) -> String {
         // Try ISO8601 formatter first
         let iso8601Formatter = ISO8601DateFormatter()
@@ -159,7 +159,7 @@ struct PointRowView: View {
         if let date = iso8601Formatter.date(from: dateString) {
             return formatLocalTime(from: date)
         }
-        
+
         // Try various DateFormatter patterns
         let dateFormatters = [
             "yyyy-MM-dd HH:mm:ss+00",
@@ -167,38 +167,38 @@ struct PointRowView: View {
             "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'+00:00'"
         ]
-        
+
         for pattern in dateFormatters {
             let formatter = DateFormatter()
             formatter.dateFormat = pattern
             formatter.timeZone = TimeZone(secondsFromGMT: 0) // UTC
-            
+
             if let date = formatter.date(from: dateString) {
                 return formatLocalTime(from: date)
             }
         }
-        
+
         // Fallback: try to extract time part manually and assume it's UTC
         if dateString.contains("T") {
             let timePart = String(dateString.split(separator: "T").last?.prefix(5) ?? "")
             // Try to parse as UTC time and convert to local
             let today = Calendar.current.dateInterval(of: .day, for: Date())?.start ?? Date()
             let timeString = "\(Calendar.current.component(.year, from: today))-\(String(format: "%02d", Calendar.current.component(.month, from: today)))-\(String(format: "%02d", Calendar.current.component(.day, from: today))) \(timePart):00"
-            
+
             let fallbackFormatter = DateFormatter()
             fallbackFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             fallbackFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            
+
             if let date = fallbackFormatter.date(from: timeString) {
                 return formatLocalTime(from: date)
             }
-            
+
             return timePart
         }
-        
+
         return dateString.suffix(5).description
     }
-    
+
     private func formatLocalTime(from date: Date) -> String {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"

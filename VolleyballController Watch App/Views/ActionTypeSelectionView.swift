@@ -4,13 +4,13 @@ struct ActionTypeSelectionView: View {
     let isLeft: Bool
     let onActionSelected: (PointType) -> Void
     let onCancel: () -> Void
-    
+
     var body: some View {
         VStack(spacing: 8) {
             Text("Point Type")
                 .font(.caption)
                 .foregroundColor(.secondary)
-            
+
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 8) {
                 ForEach(PointType.allCases, id: \.self) { pointType in
                     Button(action: {
@@ -29,7 +29,7 @@ struct ActionTypeSelectionView: View {
                     .buttonStyle(.plain)
                 }
             }
-            
+
             Button("Cancel") {
                 onCancel()
             }

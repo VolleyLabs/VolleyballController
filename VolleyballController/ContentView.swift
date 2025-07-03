@@ -2,20 +2,20 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var speechService = SpeechRecognitionService.shared
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
                 Text("VolleyballController")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
+
                 Text("Companion App")
                     .font(.title2)
                     .foregroundColor(.secondary)
-                
+
                 Spacer()
-                
+
                 VStack(spacing: 16) {
                     HStack {
                         Image(systemName: speechService.hasPermission ? "checkmark.circle.fill" : "xmark.circle.fill")
@@ -25,7 +25,7 @@ struct ContentView: View {
                         Text(speechService.hasPermission ? "Enabled" : "Disabled")
                             .foregroundColor(.secondary)
                     }
-                    
+
                     HStack {
                         Image(systemName: speechService.isWatchConnected ? "checkmark.circle.fill" : "xmark.circle.fill")
                             .foregroundColor(speechService.isWatchConnected ? .green : .red)
@@ -35,7 +35,7 @@ struct ContentView: View {
                             .foregroundColor(.secondary)
                             .font(.caption)
                     }
-                    
+
                     if let lastData = speechService.lastDataReceived {
                         HStack {
                             Image(systemName: "waveform")
@@ -51,13 +51,13 @@ struct ContentView: View {
                 .padding()
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
-                
+
                 Spacer()
-                
+
                 VStack(spacing: 8) {
                     Text("Voice Commands")
                         .font(.headline)
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
                         Text("• Say \"Left\" to add point to left team")
                         Text("• Say \"Right\" to add point to right team")
@@ -69,12 +69,12 @@ struct ContentView: View {
                 .padding()
                 .background(Color.blue.opacity(0.1))
                 .cornerRadius(12)
-                
+
                 if !speechService.commandHistory.isEmpty {
                     VStack(spacing: 8) {
                         Text("Recent Commands")
                             .font(.headline)
-                        
+
                         ScrollView {
                             LazyVStack(spacing: 4) {
                                 ForEach(speechService.commandHistory) { item in
@@ -82,7 +82,7 @@ struct ContentView: View {
                                         Image(systemName: item.success ? "checkmark.circle.fill" : "xmark.circle.fill")
                                             .foregroundColor(item.success ? .green : .red)
                                             .font(.caption)
-                                        
+
                                         VStack(alignment: .leading, spacing: 2) {
                                             HStack {
                                                 Text(item.command)
@@ -98,7 +98,7 @@ struct ContentView: View {
                                                 .foregroundColor(.secondary)
                                                 .lineLimit(2)
                                         }
-                                        
+
                                         Spacer()
                                     }
                                     .padding(.horizontal, 8)
@@ -114,7 +114,7 @@ struct ContentView: View {
                     .background(Color.gray.opacity(0.05))
                     .cornerRadius(12)
                 }
-                
+
                 Spacer()
             }
             .padding()
