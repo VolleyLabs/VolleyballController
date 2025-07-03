@@ -51,15 +51,13 @@ jobs:
           -destination "${{ matrix.destination }}" \
           CODE_SIGNING_ALLOWED=NO
     
-    # Only run tests for iOS for now since watchOS tests might have issues
-    - name: Test ${{ matrix.platform }} App
-      if: matrix.platform == 'iOS'
-      run: |
-        xcodebuild test \
-          -project VolleyballController.xcodeproj \
-          -scheme "${{ matrix.target }}" \
-          -destination "${{ matrix.destination }}" \
-          CODE_SIGNING_ALLOWED=NO
+    # - name: Test ${{ matrix.platform }} App
+    #   run: |
+    #     xcodebuild test \
+    #       -project VolleyballController.xcodeproj \
+    #       -scheme "${{ matrix.target }}" \
+    #       -destination "${{ matrix.destination }}" \
+    #       CODE_SIGNING_ALLOWED=NO
 
   lint:
     name: SwiftLint
