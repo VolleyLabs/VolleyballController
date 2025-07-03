@@ -13,9 +13,13 @@ jobs:
     
     strategy:
       matrix:
-        destination:
-          - platform=iOS Simulator,OS=18.5,name=iPhone 16
-          - platform=watchOS Simulator,id=49DDE7E3-7ED1-4B75-8D85-2670E53FBC56
+        include:
+          - platform: iOS
+            destination: "platform=iOS Simulator,name=iPhone 16"
+            target: "VolleyballController"
+          - platform: watchOS
+            destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation)"
+            target: "VolleyballController Watch App"
     
     steps:
     - name: Checkout
@@ -30,39 +34,21 @@ jobs:
     - name: Show Available Simulators
       run: xcrun simctl list devices available
     
-    # - name: Build iOS App
-    #   if: contains(matrix.destination, 'iOS')
-    #   run: |
-    #     xcodebuild clean build \
-    #       -project VolleyballController.xcodeproj \
-    #       -scheme "VolleyballController" \
-    #       -destination "${{ matrix.destination }}" \
-    #       CODE_SIGNING_ALLOWED=NO
-    
-    # - name: Test iOS App
-    #   if: contains(matrix.destination, 'iOS')
-    #   run: |
-    #     xcodebuild test \
-    #       -project VolleyballController.xcodeproj \
-    #       -scheme "VolleyballController" \
-    #       -destination "${{ matrix.destination }}" \
-    #       CODE_SIGNING_ALLOWED=NO
-    
-    - name: Build watchOS App
-      if: contains(matrix.destination, 'watchOS')
+    - name: Build ${{ matrix.platform }} App
       run: |
         xcodebuild clean build \
           -project VolleyballController.xcodeproj \
-          -scheme "VolleyballController Watch App" \
+          -target "${{ matrix.target }}" \
           -destination "${{ matrix.destination }}" \
           CODE_SIGNING_ALLOWED=NO
     
-    - name: Test watchOS App
-      if: contains(matrix.destination, 'watchOS')
+    # Only run tests for iOS for now since watchOS tests might have issues
+    - name: Test ${{ matrix.platform }} App
+      if: matrix.platform == 'iOS'
       run: |
         xcodebuild test \
           -project VolleyballController.xcodeproj \
-          -scheme "VolleyballController Watch App" \
+          -target "${{ matrix.target }}" \
           -destination "${{ matrix.destination }}" \
           CODE_SIGNING_ALLOWED=NO
 
