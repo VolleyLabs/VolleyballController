@@ -73,10 +73,14 @@ class SupabaseService: ObservableObject {
 
     func deleteLastPoint() async throws -> Point? {
         do {
-            // First, get the most recent point
+            let today = ISO8601DateFormatter().string(from: Date()).prefix(10)
+            
+            // First, get the most recent point from today only
             let recentPoints: [Point] = try await client
                 .from("points")
                 .select("*")
+                .gte("created_at", value: "\(today)T00:00:00Z")
+                .lt("created_at", value: "\(today)T23:59:59Z")
                 .order("created_at", ascending: false)
                 .limit(1)
                 .execute()
@@ -84,7 +88,7 @@ class SupabaseService: ObservableObject {
 
             guard let lastPoint = recentPoints.first, let pointId = lastPoint.id else {
                 #if DEBUG
-                print("[Supabase] ⚠️ No points found to delete")
+                print("[Supabase] ⚠️ No points from today found to delete")
                 #endif
                 return nil
             }
@@ -97,7 +101,7 @@ class SupabaseService: ObservableObject {
                 .execute()
 
             #if DEBUG
-            print("[Supabase] ✅ Last point deleted successfully")
+            print("[Supabase] ✅ Last point from today deleted successfully")
             #endif
 
             return lastPoint
