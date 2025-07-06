@@ -7,6 +7,7 @@ struct ContentView: View {
     @State private var showingMenu = false
     @State private var showingHistory = false
     @FocusState private var initialFocus: Bool
+    //@StateObject private var watchConnectivity = WatchConnectivityService.shared
 
     private var resetDisabled: Bool {
         let isLoadingOrError = scoreBoard.isLoading || scoreBoard.connectionStatus == "Error"
@@ -104,6 +105,21 @@ struct ContentView: View {
                         Text(scoreBoard.connectionStatus)
                             .font(.system(size: 8))
                     }
+                    // HStack(spacing: 4) {
+                    //     Circle()
+                    //         .fill(watchConnectivity.isConnected ? .green : .red)
+                    //         .frame(width: 4, height: 4)
+                    //     Text(watchConnectivity.connectionStatus)
+                    //         .font(.system(size: 7))
+                    // }
+                    // if watchConnectivity.audioLevel > 0 {
+                    //     HStack(spacing: 2) {
+                    //         Text("🎤")
+                    //             .font(.system(size: 6))
+                    //         Text(String(format: "%.2f", watchConnectivity.audioLevel))
+                    //             .font(.system(size: 6))
+                    //     }
+                    // }
                 }
                 .padding(.bottom, -WKInterfaceDevice.current().screenBounds.height * 0.5)
             }
@@ -150,6 +166,7 @@ struct ContentView: View {
         )
         .onAppear {
             initializeApp()
+            setupSpeechRecognition()
         }
         .sheet(isPresented: $showingHistory) {
             PointsHistoryView(
@@ -162,6 +179,16 @@ struct ContentView: View {
                 }
             )
         }
+        // .onReceive(NotificationCenter.default.publisher(for: .speechCommandReceived)) { notification in
+        //     print("ContentView: 📢 Received speech command notification: \(notification)")
+        //     if let command = notification.object as? String {
+        //         print("ContentView: 🎯 Processing command: '\(command)'")
+        //         scoreBoard.handleSpeechCommand(command)
+        //         print("ContentView: ✅ Command processed and score synced")
+        //     } else {
+        //         print("ContentView: ❌ No command found in notification object")
+        //     }
+        // }
     }
 
     private func initializeApp() {
@@ -176,6 +203,10 @@ struct ContentView: View {
                 scoreBoard.updateConnectionStatus("Error", color: .red)
             }
         }
+    }
+    
+    private func setupSpeechRecognition() {
+        //watchConnectivity.startListening()
     }
 }
 
