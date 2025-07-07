@@ -86,7 +86,7 @@ class PlayerService {
     }
     
     /// Find user by ID
-    func findUser(by id: Int) -> User? {
+    func findUser(by id: Int64) -> User? {
         return cachedPlayers.first { $0.id == id }
     }
     

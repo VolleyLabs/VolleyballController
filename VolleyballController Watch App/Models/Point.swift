@@ -5,7 +5,7 @@ struct Point: Codable, Identifiable {
     let createdAt: String?
     let winner: PointWinner
     let type: PointType?
-    let playerId: Int?
+    let playerId: Int64?
 
     private enum CodingKeys: String, CodingKey {
         case id

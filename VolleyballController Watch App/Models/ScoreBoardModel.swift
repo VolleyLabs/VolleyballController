@@ -4,7 +4,7 @@ import Foundation
 struct PendingScoreAdjustment {
     let isLeft: Bool
     let delta: Int
-    let playerId: Int?
+    let playerId: Int64?
 }
 
 @Observable
@@ -148,7 +148,7 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
         }
     }
 
-    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int? = nil) {
+    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int64? = nil) {
         if delta <= 0 {
             actionService.deleteLastPointAndUpdateScore(localPointsHistory: localPointsHistory)
             return

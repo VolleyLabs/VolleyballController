@@ -1,7 +1,7 @@
 import Foundation
 
 struct User: Codable, Identifiable {
-    let id: Int?
+    let id: Int64?
     let createdAt: String?
     let firstName: String
     let lastName: String?
@@ -9,7 +9,7 @@ struct User: Codable, Identifiable {
     let photoUrl: String?
     let admin: Bool?
     let chatId: String?
-    let pickupHeight: Int?
+    let pickupHeight: Int64?
     
     var displayName: String {
         if let username = username, !username.isEmpty {

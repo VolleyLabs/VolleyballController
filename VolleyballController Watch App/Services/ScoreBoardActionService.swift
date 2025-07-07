@@ -20,7 +20,7 @@ class ScoreBoardActionService {
         isLeft: Bool,
         delta: Int,
         pointType: PointType? = nil,
-        playerId: Int? = nil,
+        playerId: Int64? = nil,
         currentLeftScore: Int,
         currentRightScore: Int
     ) -> (newLeftScore: Int, newRightScore: Int) {
@@ -43,7 +43,7 @@ class ScoreBoardActionService {
     private func trackPoint(
         winner: PointWinner,
         pointType: PointType? = nil,
-        playerId: Int? = nil
+        playerId: Int64? = nil
     ) {
         let point = Point(
             id: nil,

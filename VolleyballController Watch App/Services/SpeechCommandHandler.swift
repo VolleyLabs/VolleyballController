@@ -1,7 +1,7 @@
 import Foundation
 
 protocol SpeechCommandHandlerDelegate: AnyObject {
-    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int?)
+    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int64?)
     func undoLastAction()
     func triggerLeftTap()
     func triggerRightTap()

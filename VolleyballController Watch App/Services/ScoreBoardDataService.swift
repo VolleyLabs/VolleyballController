@@ -18,7 +18,7 @@ class ScoreBoardDataService {
     func trackPoint(
         winner: PointWinner,
         pointType: PointType? = nil,
-        playerId: Int? = nil
+        playerId: Int64? = nil
     ) async throws -> Point {
         let point = Point(
             id: nil,
