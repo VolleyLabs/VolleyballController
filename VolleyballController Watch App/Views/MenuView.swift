@@ -4,6 +4,7 @@ struct MenuView: View {
     let points: [Point]
     let onReset: () -> Void
     let onShowHistory: () -> Void
+    let onShowTeamSetup: () -> Void
     let onCancel: () -> Void
     let resetDisabled: Bool
 
@@ -26,6 +27,22 @@ struct MenuView: View {
 
                 VStack(spacing: 6) {
                     Button {
+                        onShowTeamSetup()
+                        onCancel()
+                    } label: {
+                        HStack {
+                            Text("👥")
+                            Text("Teams")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(.white)
+                    .background(Color.white.opacity(0.1))
+                    .cornerRadius(8)
+                    
+                    Button {
                         onShowHistory()
                         onCancel()
                     } label: {
@@ -46,7 +63,7 @@ struct MenuView: View {
                     } label: {
                         HStack {
                             Text("🔄")
-                            Text("Reset All")
+                            Text("Reset")
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
@@ -74,9 +91,9 @@ struct MenuView: View {
                 }
             }
             .padding()
-            .background(Color.black.opacity(0.8))
+            .background(Color.black.opacity(0.9))
             .cornerRadius(12)
-            .frame(maxWidth: 120)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .alert("Reset All Data?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) { }
@@ -96,6 +113,7 @@ struct MenuView: View {
         points: [],
         onReset: {},
         onShowHistory: {},
+        onShowTeamSetup: {},
         onCancel: {},
         resetDisabled: false
     )

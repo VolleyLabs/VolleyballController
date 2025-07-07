@@ -18,14 +18,14 @@ class ScoreBoardDataService {
     func trackPoint(
         winner: PointWinner,
         pointType: PointType? = nil,
-        player: String? = nil
+        playerId: Int? = nil
     ) async throws -> Point {
         let point = Point(
             id: nil,
             createdAt: ISO8601DateFormatter().string(from: Date()),
             winner: winner,
             type: pointType,
-            playerId: nil
+            playerId: playerId
         )
 
         try await SupabaseService.shared.addPoint(point)

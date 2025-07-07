@@ -4,7 +4,7 @@ import Foundation
 struct PendingScoreAdjustment {
     let isLeft: Bool
     let delta: Int
-    let player: String?
+    let playerId: Int?
 }
 
 @Observable
@@ -21,6 +21,8 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
     var connectionColor: Color = .orange
     var isLoading: Bool = true
     var showingActionTypeSelection: Bool = false
+    var showingPlayerSelection: Bool = false
+    var selectedPointType: PointType?
 
     private let workoutKeepAlive = WorkoutKeepAlive()
     private let speechCommandHandler: SpeechCommandHandler
@@ -31,6 +33,8 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
     private var currentSetNumber = 1
     var pendingScoreAdjustment: PendingScoreAdjustment?
     var localPointsHistory: [Point] = []
+    var leftTeamPlayers: [User?] = Array(repeating: nil, count: 7)
+    var rightTeamPlayers: [User?] = Array(repeating: nil, count: 7)
 
     init() {
         speechCommandHandler = SpeechCommandHandler()
@@ -144,24 +148,33 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
         }
     }
 
-    func requestScoreAdjustment(isLeft: Bool, delta: Int, player: String? = nil) {
+    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int? = nil) {
         if delta <= 0 {
             actionService.deleteLastPointAndUpdateScore(localPointsHistory: localPointsHistory)
             return
         }
 
-        pendingScoreAdjustment = PendingScoreAdjustment(isLeft: isLeft, delta: delta, player: player)
+        pendingScoreAdjustment = PendingScoreAdjustment(isLeft: isLeft, delta: delta, playerId: playerId)
         showingActionTypeSelection = true
     }
 
     func confirmScoreAdjustment(pointType: PointType) {
         guard let pending = pendingScoreAdjustment else { return }
 
+        // For Ace, Attack, and Block point types, show player selection
+        if pointType == .ace || pointType == .attack || pointType == .block {
+            selectedPointType = pointType
+            showingActionTypeSelection = false
+            showingPlayerSelection = true
+            return
+        }
+
+        // For Error and other point types, proceed as normal
         let result = actionService.adjustScore(
             isLeft: pending.isLeft,
             delta: pending.delta,
             pointType: pointType,
-            player: pending.player,
+            playerId: pending.playerId,
             currentLeftScore: leftScore,
             currentRightScore: rightScore
         )
@@ -179,10 +192,46 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
         showingActionTypeSelection = false
     }
 
+    func confirmScoreAdjustmentWithPlayer(_ selectedUser: User?) {
+        guard let pending = pendingScoreAdjustment,
+              let pointType = selectedPointType else { return }
+
+        let result = actionService.adjustScore(
+            isLeft: pending.isLeft,
+            delta: pending.delta,
+            pointType: pointType,
+            playerId: selectedUser?.id,
+            currentLeftScore: leftScore,
+            currentRightScore: rightScore
+        )
+
+        leftScore = result.newLeftScore
+        rightScore = result.newRightScore
+
+        if pending.isLeft {
+            HapticService.shared.playLeftHaptic()
+        } else {
+            HapticService.shared.playRightHaptic()
+        }
+
+        pendingScoreAdjustment = nil
+        showingPlayerSelection = false
+        selectedPointType = nil
+    }
+    
+    func cancelPlayerSelection() {
+        showingPlayerSelection = false
+        selectedPointType = nil
+        // Return to action type selection
+        showingActionTypeSelection = true
+    }
+
     func cancelScoreAdjustment() {
         HapticService.shared.playCancelHaptic()
         pendingScoreAdjustment = nil
         showingActionTypeSelection = false
+        showingPlayerSelection = false
+        selectedPointType = nil
     }
 
     func triggerLeftTap() {
@@ -238,6 +287,7 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
             let points = try await dataService.loadInitialState()
             localPointsHistory = points
             recalculateScoresFromPoints()
+            
             print("📊 Current scores: \(leftScore)-\(rightScore) in set \(currentSetNumber)")
             print("📊 Set wins: Left \(leftWins) - Right \(rightWins)")
             isLoading = false
@@ -246,6 +296,15 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
             print("Failed to load initial state: \(error)")
             isLoading = false
             return false
+        }
+    }
+    
+    func updateTeamPlayer(user: User?, position: Int, isLeft: Bool) {
+        let index = position - 1 // Convert to 0-based index
+        if isLeft {
+            leftTeamPlayers[index] = user
+        } else {
+            rightTeamPlayers[index] = user
         }
     }
 

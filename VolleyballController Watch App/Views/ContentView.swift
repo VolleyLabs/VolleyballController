@@ -6,6 +6,8 @@ struct ContentView: View {
     @State private var scoreBoard = ScoreBoardModel()
     @State private var showingMenu = false
     @State private var showingHistory = false
+    @State private var showingTeamSelection = false
+    @State private var availableUsers: [User] = []
     @FocusState private var initialFocus: Bool
     //@StateObject private var watchConnectivity = WatchConnectivityService.shared
 
@@ -17,7 +19,7 @@ struct ContentView: View {
     }
 
     private func handleScoreAdjust(isLeft: Bool, delta: Int, pointType: PointType?, player: String?) {
-        scoreBoard.requestScoreAdjustment(isLeft: isLeft, delta: delta, player: player)
+        scoreBoard.requestScoreAdjustment(isLeft: isLeft, delta: delta, playerId: nil)
 
         // Add haptic feedback
         if isLeft {
@@ -52,6 +54,27 @@ struct ContentView: View {
                     onScoreAdjust: handleScoreAdjust
                 )
                 .focused($initialFocus)
+                .background(
+                    VStack(spacing: 2) {
+                        ForEach(0..<7, id: \.self) { index in
+                            if let player = scoreBoard.leftTeamPlayers[index] {
+                                HStack {
+                                    Circle()
+                                        .fill(Color.blue.opacity(0.3))
+                                        .frame(width: 4, height: 4)
+                                    Text(player.displayName)
+                                        .font(.system(size: 8, weight: .light))
+                                        .foregroundColor(.white.opacity(0.2))
+                                        .lineLimit(1)
+                                    Spacer()
+                                }
+                                .padding(.leading, 4)
+                            }
+                        }
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                )
 
                 TapZoneView(
                     color: .red,
@@ -62,6 +85,27 @@ struct ContentView: View {
                     suppress: $scoreBoard.suppressRightTap,
                     isLoading: scoreBoard.isLoading,
                     onScoreAdjust: handleScoreAdjust
+                )
+                .background(
+                    VStack(spacing: 2) {
+                        ForEach(0..<7, id: \.self) { index in
+                            if let player = scoreBoard.rightTeamPlayers[index] {
+                                HStack {
+                                    Spacer()
+                                    Text(player.displayName)
+                                        .font(.system(size: 8, weight: .light))
+                                        .foregroundColor(.white.opacity(0.2))
+                                        .lineLimit(1)
+                                    Circle()
+                                        .fill(Color.red.opacity(0.3))
+                                        .frame(width: 4, height: 4)
+                                }
+                                .padding(.trailing, 4)
+                            }
+                        }
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 )
             }
             .onAppear {
@@ -146,6 +190,20 @@ struct ContentView: View {
                         onCancel: handleActionTypeCancelled
                     )
                     .zIndex(1000)
+                } else if scoreBoard.showingPlayerSelection {
+                    PlayerSelectionView(
+                        availableUsers: availableUsers,
+                        mode: .pointAttribution(team: scoreBoard.pendingScoreAdjustment?.isLeft == true ? .left : .right),
+                        onPlayerSelected: { selectedUser in
+                            scoreBoard.confirmScoreAdjustmentWithPlayer(selectedUser)
+                        },
+                        leftTeamPlayers: scoreBoard.leftTeamPlayers,
+                        rightTeamPlayers: scoreBoard.rightTeamPlayers
+                    )
+                    .onAppear {
+                        loadUsersForPointAttribution()
+                    }
+                    .zIndex(1000)
                 } else if showingMenu {
                     MenuView(
                         points: scoreBoard.localPointsHistory,
@@ -154,6 +212,9 @@ struct ContentView: View {
                         },
                         onShowHistory: {
                             showingHistory = true
+                        },
+                        onShowTeamSetup: {
+                            showingTeamSelection = true
                         },
                         onCancel: {
                             showingMenu = false
@@ -176,6 +237,18 @@ struct ContentView: View {
                 },
                 onDeletePoint: { point in
                     scoreBoard.deleteSpecificPoint(point)
+                }
+            )
+        }
+        .fullScreenCover(isPresented: $showingTeamSelection) {
+            TeamSelectionView(
+                leftTeamPlayers: $scoreBoard.leftTeamPlayers,
+                rightTeamPlayers: $scoreBoard.rightTeamPlayers,
+                onBack: {
+                    showingTeamSelection = false
+                },
+                onPlayerUpdated: { user, position, isLeft in
+                    scoreBoard.updateTeamPlayer(user: user, position: position, isLeft: isLeft)
                 }
             )
         }
@@ -207,6 +280,21 @@ struct ContentView: View {
     
     private func setupSpeechRecognition() {
         //watchConnectivity.startListening()
+    }
+    
+    private func loadUsersForPointAttribution() {
+        guard availableUsers.isEmpty else { return }
+        
+        Task {
+            do {
+                let users = try await SupabaseService.shared.fetchUsers()
+                await MainActor.run {
+                    availableUsers = users
+                }
+            } catch {
+                print("❌ Failed to load users for point attribution: \(error)")
+            }
+        }
     }
 }
 

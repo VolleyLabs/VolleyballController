@@ -160,4 +160,27 @@ class SupabaseService: ObservableObject {
         }
     }
 
+    // MARK: - User Management
+    func fetchUsers() async throws -> [User] {
+        do {
+            let users: [User] = try await client
+                .from("users")
+                .select("*")
+                .order("first_name", ascending: true)
+                .execute()
+                .value
+
+            #if DEBUG
+            print("[Supabase] ✅ users fetch OK - found \(users.count) users")
+            #endif
+
+            return users
+        } catch {
+            #if DEBUG
+            print("[Supabase] ❌ users fetch FAILED:", error)
+            #endif
+            throw error
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ class ScoreBoardActionService {
         isLeft: Bool,
         delta: Int,
         pointType: PointType? = nil,
-        player: String? = nil,
+        playerId: Int? = nil,
         currentLeftScore: Int,
         currentRightScore: Int
     ) -> (newLeftScore: Int, newRightScore: Int) {
@@ -33,7 +33,7 @@ class ScoreBoardActionService {
             trackPoint(
                 winner: isLeft ? .left : .right,
                 pointType: pointType,
-                player: player
+                playerId: playerId
             )
         }
 
@@ -43,14 +43,14 @@ class ScoreBoardActionService {
     private func trackPoint(
         winner: PointWinner,
         pointType: PointType? = nil,
-        player: String? = nil
+        playerId: Int? = nil
     ) {
         let point = Point(
             id: nil,
             createdAt: ISO8601DateFormatter().string(from: Date()),
             winner: winner,
             type: pointType,
-            playerId: nil
+            playerId: playerId
         )
 
         delegate?.addToLocalHistory(point)
@@ -58,7 +58,7 @@ class ScoreBoardActionService {
 
         Task {
             do {
-                _ = try await dataService.trackPoint(winner: winner, pointType: pointType, player: player)
+                _ = try await dataService.trackPoint(winner: winner, pointType: pointType, playerId: playerId)
             } catch {
                 print("❌ Failed to track point: \(error)")
                 await MainActor.run {

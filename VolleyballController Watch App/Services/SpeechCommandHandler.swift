@@ -1,7 +1,7 @@
 import Foundation
 
 protocol SpeechCommandHandlerDelegate: AnyObject {
-    func requestScoreAdjustment(isLeft: Bool, delta: Int, player: String?)
+    func requestScoreAdjustment(isLeft: Bool, delta: Int, playerId: Int?)
     func undoLastAction()
     func triggerLeftTap()
     func triggerRightTap()
@@ -19,13 +19,13 @@ class SpeechCommandHandler {
         switch command {
         case "left":
             print("SpeechCommandHandler: ⬅️ Processing LEFT command")
-            delegate?.requestScoreAdjustment(isLeft: true, delta: 1, player: nil)
+            delegate?.requestScoreAdjustment(isLeft: true, delta: 1, playerId: nil)
             HapticService.shared.playLeftHaptic()
             delegate?.triggerLeftTap()
             print("SpeechCommandHandler: ✅ LEFT score adjustment requested")
         case "right":
             print("SpeechCommandHandler: ➡️ Processing RIGHT command")
-            delegate?.requestScoreAdjustment(isLeft: false, delta: 1, player: nil)
+            delegate?.requestScoreAdjustment(isLeft: false, delta: 1, playerId: nil)
             HapticService.shared.playRightHaptic()
             delegate?.triggerRightTap()
             print("SpeechCommandHandler: ✅ RIGHT score adjustment requested")
