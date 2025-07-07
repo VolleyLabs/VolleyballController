@@ -6,7 +6,6 @@ struct TeamSelectionView: View {
     @State private var selectedPosition: Int = 1
     @State private var selectedTeam: TeamSide = .left
     @State private var showingPlayerSelection = false
-    @State private var availableUsers: [User] = []
     
     let onBack: () -> Void
     let onPlayerUpdated: ((User?, Int, Bool) -> Void)?
@@ -54,12 +53,9 @@ struct TeamSelectionView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        .onAppear {
-            loadUsers()
-        }
         .sheet(isPresented: $showingPlayerSelection) {
             PlayerSelectionView(
-                availableUsers: availableUsers,
+                availableUsers: PlayerService.shared.getPlayersSortedByName(),
                 mode: .teamSetup(position: selectedPosition, team: selectedTeam),
                 onPlayerSelected: { selectedUser in
                     assignPlayerToPosition(user: selectedUser, position: selectedPosition, team: selectedTeam)
@@ -72,22 +68,6 @@ struct TeamSelectionView: View {
         }
     }
     
-    private func loadUsers() {
-        Task {
-            do {
-                let users = try await SupabaseService.shared.fetchUsers()
-                await MainActor.run {
-                    availableUsers = users
-                    print("✅ Loaded \(users.count) users successfully")
-                    for user in users {
-                        print("User: \(user.displayName) (id: \(user.id ?? 0))")
-                    }
-                }
-            } catch {
-                print("❌ Failed to load users: \(error)")
-            }
-        }
-    }
     
     private func assignPlayerToPosition(user: User?, position: Int, team: TeamSide) {
         let index = position - 1 // Convert to 0-based index

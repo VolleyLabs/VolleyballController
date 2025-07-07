@@ -7,7 +7,6 @@ struct ContentView: View {
     @State private var showingMenu = false
     @State private var showingHistory = false
     @State private var showingTeamSelection = false
-    @State private var availableUsers: [User] = []
     @FocusState private var initialFocus: Bool
     //@StateObject private var watchConnectivity = WatchConnectivityService.shared
 
@@ -192,7 +191,10 @@ struct ContentView: View {
                     .zIndex(1000)
                 } else if scoreBoard.showingPlayerSelection {
                     PlayerSelectionView(
-                        availableUsers: availableUsers,
+                        availableUsers: PlayerService.shared.getPlayersForPointAttribution(
+                            isLeft: scoreBoard.pendingScoreAdjustment?.isLeft == true,
+                            teamPlayers: scoreBoard.pendingScoreAdjustment?.isLeft == true ? scoreBoard.leftTeamPlayers : scoreBoard.rightTeamPlayers
+                        ),
                         mode: .pointAttribution(team: scoreBoard.pendingScoreAdjustment?.isLeft == true ? .left : .right),
                         onPlayerSelected: { selectedUser in
                             scoreBoard.confirmScoreAdjustmentWithPlayer(selectedUser)
@@ -200,9 +202,6 @@ struct ContentView: View {
                         leftTeamPlayers: scoreBoard.leftTeamPlayers,
                         rightTeamPlayers: scoreBoard.rightTeamPlayers
                     )
-                    .onAppear {
-                        loadUsersForPointAttribution()
-                    }
                     .zIndex(1000)
                 } else if showingMenu {
                     MenuView(
@@ -282,20 +281,6 @@ struct ContentView: View {
         //watchConnectivity.startListening()
     }
     
-    private func loadUsersForPointAttribution() {
-        guard availableUsers.isEmpty else { return }
-        
-        Task {
-            do {
-                let users = try await SupabaseService.shared.fetchUsers()
-                await MainActor.run {
-                    availableUsers = users
-                }
-            } catch {
-                print("❌ Failed to load users for point attribution: \(error)")
-            }
-        }
-    }
 }
 
 #Preview { ContentView() }

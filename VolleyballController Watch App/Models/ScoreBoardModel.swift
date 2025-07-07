@@ -284,12 +284,22 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
     func loadInitialState() async -> Bool {
         do {
             workoutKeepAlive.start()
-            let points = try await dataService.loadInitialState()
+            
+            // Load points and players in parallel
+            async let pointsTask = dataService.loadInitialState()
+            async let playersTask = PlayerService.shared.loadPlayersAsync()
+            
+            // Wait for points to complete (critical path)
+            let points = try await pointsTask
             localPointsHistory = points
             recalculateScoresFromPoints()
             
+            // Wait for players to complete (non-blocking)
+            await playersTask
+            
             print("📊 Current scores: \(leftScore)-\(rightScore) in set \(currentSetNumber)")
             print("📊 Set wins: Left \(leftWins) - Right \(rightWins)")
+            print("👥 Players loaded: \(PlayerService.shared.players.count)")
             isLoading = false
             return true
         } catch {
