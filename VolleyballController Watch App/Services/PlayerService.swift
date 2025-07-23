@@ -92,7 +92,7 @@ class PlayerService {
     
     /// Get players sorted by name
     func getPlayersSortedByName() -> [User] {
-        return cachedPlayers.sorted { $0.displayName < $1.displayName }
+        return cachedPlayers.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
     }
     
     /// Get players sorted by total points today (descending) within a team
@@ -113,11 +113,11 @@ class PlayerService {
             if points1 != points2 {
                 return points1 > points2  // Higher points first
             }
-            return player1.displayName < player2.displayName  // Then alphabetically
+            return player1.displayName.localizedCaseInsensitiveCompare(player2.displayName) == .orderedAscending  // Then alphabetically
         }
         
         // Sort other players by name
-        let sortedOtherPlayers = otherPlayers.sorted { $0.displayName < $1.displayName }
+        let sortedOtherPlayers = otherPlayers.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
         
         return sortedTeamPlayers + sortedOtherPlayers
     }

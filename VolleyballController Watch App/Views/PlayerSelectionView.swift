@@ -82,7 +82,7 @@ struct PlayerSelectionView: View {
             if points1 != points2 {
                 return points1 > points2  // Higher points first
             }
-            return user1.displayName < user2.displayName  // Then alphabetically
+            return user1.displayName.localizedCaseInsensitiveCompare(user2.displayName) == .orderedAscending  // Then alphabetically
         }
     }
     
@@ -106,7 +106,7 @@ struct PlayerSelectionView: View {
                     let allTeamPlayerIds = Set((leftTeamPlayers + rightTeamPlayers).compactMap { $0?.id })
                     let otherPlayers = sortedUsers.filter { user in
                         !allTeamPlayerIds.contains(user.id ?? -1)
-                    }.sorted { $0.displayName < $1.displayName }
+                    }.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
                     
                     // Team players first
                     ForEach(teamPlayers, id: \.id) { user in
