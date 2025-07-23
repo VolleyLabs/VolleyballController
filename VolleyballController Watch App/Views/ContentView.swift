@@ -50,6 +50,7 @@ struct ContentView: View {
                     tapped: $scoreBoard.leftTapped,
                     suppress: $scoreBoard.suppressLeftTap,
                     isLoading: scoreBoard.isLoading,
+                    errorPercentage: scoreBoard.leftErrorPercentage,
                     onScoreAdjust: handleScoreAdjust
                 )
                 .focused($initialFocus)
@@ -83,6 +84,7 @@ struct ContentView: View {
                     tapped: $scoreBoard.rightTapped,
                     suppress: $scoreBoard.suppressRightTap,
                     isLoading: scoreBoard.isLoading,
+                    errorPercentage: scoreBoard.rightErrorPercentage,
                     onScoreAdjust: handleScoreAdjust
                 )
                 .background(
@@ -138,8 +140,16 @@ struct ContentView: View {
                             .scaleEffect(0.6)
                             .frame(height: 12)
                     } else {
-                        Text("\(scoreBoard.leftWins) – \(scoreBoard.rightWins)")
-                            .font(.caption2)
+                        VStack(spacing: 1) {
+                            Text("\(scoreBoard.leftWins) – \(scoreBoard.rightWins)")
+                                .font(.caption2)
+                            
+                            if let totalErrorPercentage = scoreBoard.totalErrorPercentage, totalErrorPercentage > 0 {
+                                Text("Errors: \(totalErrorPercentage, specifier: "%.1f")%")
+                                    .font(.system(size: 8, weight: .medium))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
                     HStack(spacing: 4) {
                         Circle()
@@ -164,7 +174,7 @@ struct ContentView: View {
                     //     }
                     // }
                 }
-                .padding(.bottom, -WKInterfaceDevice.current().screenBounds.height * 0.5)
+                .padding(.bottom, -30)
             }
         }
         .overlay(

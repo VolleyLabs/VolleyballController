@@ -46,6 +46,32 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
     var winner: String {
         calculationService.calculateWinner(leftScore: leftScore, rightScore: rightScore)
     }
+    
+    var leftErrorPercentage: Double? {
+        return calculateErrorPercentage(for: .left)
+    }
+    
+    var rightErrorPercentage: Double? {
+        return calculateErrorPercentage(for: .right)
+    }
+    
+    var totalErrorPercentage: Double? {
+        let totalPoints = localPointsHistory.count
+        guard totalPoints > 0 else { return nil }
+        
+        let totalErrorPoints = localPointsHistory.filter { $0.type == .error }.count
+        return Double(totalErrorPoints) / Double(totalPoints) * 100.0
+    }
+    
+    private func calculateErrorPercentage(for team: PointWinner) -> Double? {
+        let teamPoints = localPointsHistory.filter { $0.winner == team }
+        let totalPoints = teamPoints.count
+        
+        guard totalPoints > 0 else { return nil }
+        
+        let errorPoints = teamPoints.filter { $0.type == .error }.count
+        return Double(errorPoints) / Double(totalPoints) * 100.0
+    }
 
     // MARK: - ScoreBoardActionDelegate
     func addToLocalHistory(_ point: Point) {

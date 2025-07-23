@@ -8,6 +8,7 @@ struct TapZoneView: View {
     @Binding var tapped: Bool
     @Binding var suppress: Bool
     let isLoading: Bool
+    let errorPercentage: Double?
 
     let onScoreAdjust: (Bool, Int, PointType?, String?) -> Void
 
@@ -19,8 +20,17 @@ struct TapZoneView: View {
                     .scaleEffect(1.5)
                     .frame(width: 80, height: 80)
             } else {
-                Text("\(score)")
-                    .font(.system(size: 80, weight: .bold))
+                VStack(spacing: 2) {
+                    // Error percentage display
+                    if let errorPercentage = errorPercentage, errorPercentage > 0 {
+                        Text("\(errorPercentage, specifier: "%.1f")%")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(color.opacity(0.6))
+                    }
+                    
+                    Text("\(score)")
+                        .font(.system(size: 80, weight: .bold))
+                }
             }
         }
         .foregroundColor(color)
