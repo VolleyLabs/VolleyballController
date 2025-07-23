@@ -222,6 +222,11 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
         guard let pending = pendingScoreAdjustment,
               let pointType = selectedPointType else { return }
 
+        // Auto-assign player to team if they're not already on any team
+        if let user = selectedUser {
+            autoAssignPlayerToTeam(user: user, isLeft: pending.isLeft)
+        }
+
         let result = actionService.adjustScore(
             isLeft: pending.isLeft,
             delta: pending.delta,
@@ -341,6 +346,25 @@ class ScoreBoardModel: SpeechCommandHandlerDelegate, ScoreBoardActionDelegate {
             leftTeamPlayers[index] = user
         } else {
             rightTeamPlayers[index] = user
+        }
+    }
+    
+    private func autoAssignPlayerToTeam(user: User, isLeft: Bool) {
+        // Check if player is already on any team
+        let allTeamPlayers = leftTeamPlayers + rightTeamPlayers
+        let isAlreadyOnTeam = allTeamPlayers.compactMap { $0 }.contains { $0.id == user.id }
+        
+        if !isAlreadyOnTeam {
+            // Find first available position on the target team
+            let targetTeam = isLeft ? leftTeamPlayers : rightTeamPlayers
+            if let firstEmptyIndex = targetTeam.firstIndex(where: { $0 == nil }) {
+                if isLeft {
+                    leftTeamPlayers[firstEmptyIndex] = user
+                } else {
+                    rightTeamPlayers[firstEmptyIndex] = user
+                }
+                print("✅ Auto-assigned \(user.displayName) to \(isLeft ? "left" : "right") team at position \(firstEmptyIndex + 1)")
+            }
         }
     }
 
