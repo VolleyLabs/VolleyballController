@@ -200,7 +200,8 @@ struct ContentView: View {
                             scoreBoard.confirmScoreAdjustmentWithPlayer(selectedUser)
                         },
                         leftTeamPlayers: scoreBoard.leftTeamPlayers,
-                        rightTeamPlayers: scoreBoard.rightTeamPlayers
+                        rightTeamPlayers: scoreBoard.rightTeamPlayers,
+                        pointsHistory: scoreBoard.localPointsHistory
                     )
                     .zIndex(1000)
                 } else if showingMenu {

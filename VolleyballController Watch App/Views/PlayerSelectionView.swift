@@ -27,6 +27,7 @@ struct PlayerSelectionView: View {
     let onPlayerSelected: (User?) -> Void
     let leftTeamPlayers: [User?]
     let rightTeamPlayers: [User?]
+    let pointsHistory: [Point]
     
     @Environment(\.dismiss) private var dismiss
     
@@ -54,20 +55,23 @@ struct PlayerSelectionView: View {
             return unselectedUsers + selectedUsers
             
         case .pointAttribution(let team):
-            // For point attribution, show only the relevant team's players first
-            let teamPlayers = team == .left ? leftTeamPlayers : rightTeamPlayers
-            let teamPlayerUsers = teamPlayers.compactMap { $0 }
-            let teamPlayerIds = Set(teamPlayerUsers.compactMap { $0.id })
-            
-            let currentTeamUsers = availableUsers.filter { user in
-                teamPlayerIds.contains(user.id ?? -1)
-            }
-            let otherUsers = availableUsers.filter { user in
-                !teamPlayerIds.contains(user.id ?? -1)
-            }
-            
-            return currentTeamUsers + otherUsers
+            // For point attribution, use the new sorting method that prioritizes by points
+            return PlayerService.shared.getPlayersSortedByPoints(
+                isLeft: team == .left,
+                teamPlayers: team == .left ? leftTeamPlayers : rightTeamPlayers,
+                pointsHistory: pointsHistory
+            )
         }
+    }
+    
+    private var playerPointCounts: [Int64: Int] {
+        var counts: [Int64: Int] = [:]
+        for point in pointsHistory {
+            if let playerId = point.playerId {
+                counts[playerId, default: 0] += 1
+            }
+        }
+        return counts
     }
     
     var body: some View {
@@ -92,9 +96,18 @@ struct PlayerSelectionView: View {
                             Spacer()
                             
                             if case .pointAttribution = mode, isCurrentTeamPlayer {
-                                Text("⭐")
-                                    .font(.caption2)
-                                    .foregroundColor(mode.titleColor)
+                                let pointCount = playerPointCounts[user.id ?? -1] ?? 0
+                                HStack(spacing: 4) {
+                                    if pointCount > 0 {
+                                        Text("\(pointCount)")
+                                            .font(.caption2)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(mode.titleColor)
+                                    }
+                                    Text("⭐")
+                                        .font(.caption2)
+                                        .foregroundColor(mode.titleColor)
+                                }
                             } else if isSelected {
                                 Text("✓")
                                     .font(.caption2)

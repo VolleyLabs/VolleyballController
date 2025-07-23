@@ -94,4 +94,44 @@ class PlayerService {
     func getPlayersSortedByName() -> [User] {
         return cachedPlayers.sorted { $0.displayName < $1.displayName }
     }
+    
+    /// Get players sorted by total points today (descending) within a team
+    func getPlayersSortedByPoints(isLeft: Bool, teamPlayers: [User?], pointsHistory: [Point]) -> [User] {
+        let teamPlayers = getTeamPlayers(isLeft: isLeft, teamPlayers: teamPlayers)
+        let otherPlayers = cachedPlayers.filter { player in
+            !teamPlayers.contains { $0.id == player.id }
+        }
+        
+        // Calculate points for each team player
+        let playerPointCounts = calculatePlayerPoints(from: pointsHistory)
+        
+        // Sort team players by points (highest first), then by name
+        let sortedTeamPlayers = teamPlayers.sorted { player1, player2 in
+            let points1 = playerPointCounts[player1.id ?? -1] ?? 0
+            let points2 = playerPointCounts[player2.id ?? -1] ?? 0
+            
+            if points1 != points2 {
+                return points1 > points2  // Higher points first
+            }
+            return player1.displayName < player2.displayName  // Then alphabetically
+        }
+        
+        // Sort other players by name
+        let sortedOtherPlayers = otherPlayers.sorted { $0.displayName < $1.displayName }
+        
+        return sortedTeamPlayers + sortedOtherPlayers
+    }
+    
+    /// Calculate total points scored by each player today
+    private func calculatePlayerPoints(from pointsHistory: [Point]) -> [Int64: Int] {
+        var playerPoints: [Int64: Int] = [:]
+        
+        for point in pointsHistory {
+            if let playerId = point.playerId {
+                playerPoints[playerId, default: 0] += 1
+            }
+        }
+        
+        return playerPoints
+    }
 }

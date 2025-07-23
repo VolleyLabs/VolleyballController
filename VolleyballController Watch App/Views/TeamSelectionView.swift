@@ -63,7 +63,8 @@ struct TeamSelectionView: View {
                     showingPlayerSelection = false
                 },
                 leftTeamPlayers: leftTeamPlayers,
-                rightTeamPlayers: rightTeamPlayers
+                rightTeamPlayers: rightTeamPlayers,
+                pointsHistory: []
             )
         }
     }
